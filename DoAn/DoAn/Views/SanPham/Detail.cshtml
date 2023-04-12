@@ -1,0 +1,183 @@
+﻿@model DoAn.Models.SanPham
+
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body class="main-layout inner_page">
+
+
+
+    <div class="head">
+
+        <link href="https://fonts.googleapis.com/css?family=Bentham|Playfair+Display|Raleway:400,500|Suranna|Trocchi" rel="stylesheet">
+    </div>
+
+
+    <div class="body">
+
+        <div class="wrapper">
+            @using (Html.BeginForm("Index", "SanPham"))
+            {
+                <button type="submit" class="btn-back"><span>&#8249</span></button>
+            }
+            <div class="product-img">
+                <img src="@Model.thumbnail" height="420" width="327">
+                <div class="product-price-btn">
+                    <p>Giá: <span>@String.Format("{0:0,0}", @Model.price)</span>VNĐ</p>
+                    @using (Html.BeginForm("addCart", "GioHang", new { @id = @Model.id, @strURL = Request.Url.ToString() }))
+                    {
+                        <button type="submit" onclick="showAlert()" class="btn-price-btn"><span>Order</span></button>
+                    }
+                </div>
+            </div>
+            <div class="product-info">
+                <div class="product-text">
+                    <h1>@Model.title</h1>
+
+                    <p>@Model.description</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+<script>
+    function showAlert() {
+    alert("Đã thêm vào giỏ");
+    }
+</script>
+
+    <style>
+        body {
+        }
+
+        .btn-back:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .btn-back {
+            text-decoration: none;
+            display: inline-block;
+            padding: 10px 30px;
+            background-color: #2f5233;
+            color: white;
+            border-radius: 2px;
+        }
+
+
+        .wrapper {
+            height: 700px;
+            width: 1200px;
+            margin: 50px auto;
+            border-radius: 7px 7px 7px 7px;
+            /* VIA CSS MATIC https://goo.gl/cIbnS */
+            -webkit-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-img {
+            float: left;
+            height: 500px;
+            width: 500px;
+        }
+
+            .product-img img {
+                border-radius: 7px 0 0 7px;
+                width: 500px;
+                padding-top: 60px;
+            }
+
+        .product-info {
+            float: right;
+            width: 527px;
+            border-radius: 0 7px 10px 7px;
+            background-color: #ffffff;
+        }
+
+        .product-text {
+            height: 300px;
+            width: 327px;
+        }
+
+            .product-text h1 {
+                margin: 0 0 0 50px;
+                padding-top: 60px;
+                width: inherit;
+                font-size: 50px;
+                color: #474747;
+            }
+
+            .product-text h1,
+            .product-price-btn p {
+                font-family: inherit, serif;
+            }
+
+            .product-text p {
+                height: 500px;
+                width: 400px;
+                padding-top: 10px;
+                margin: 0 0 0 5px;
+                font-family: 'Playfair Display', serif;
+                color: #8d8d8d;
+                line-height: 1.7em;
+                font-size: 20px;
+                font-weight: lighter;
+                overflow: hidden;
+            }
+
+        .product-price-btn {
+            height: 103px;
+            width: 327px;
+            margin-top: 30px;
+            position: relative;
+        }
+
+            .product-price-btn p {
+                display: inline-block;
+                width: 300px;
+                top: -13px;
+                height: 50px;
+                font-family: 'Trocchi', serif;
+                margin: 0 0 0 150px;
+                font-size: 28px;
+                font-weight: lighter;
+                color: #474747;
+            }
+
+        span {
+            display: inline-block;
+            height: 50px;
+            font-family: 'Suranna', serif;
+            font-size: 34px;
+        }
+
+        .product-price-btn button {
+            float: right;
+            display: inline-block;
+            height: 50px;
+            width: 176px;
+            box-sizing: border-box;
+            border: transparent;
+            border-radius: 60px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #ffffff;
+            background-color: #9cebd5;
+            cursor: pointer;
+            outline: none;
+        }
+
+            .product-price-btn button:hover {
+                background-color: #79b0a1;
+            }
+    </style>
+
+
+</body>

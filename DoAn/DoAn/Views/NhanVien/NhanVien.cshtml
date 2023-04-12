@@ -1,0 +1,92 @@
+﻿@model IEnumerable<DoAn.Models.NhanVien>
+
+@{
+    ViewBag.Title = "NhanVien";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<!DOCTYPE html>
+<h2>Nhân Viên</h2>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <p>
+        @if (int.Parse(@Session["IDuser"].ToString()) == 1)
+        {
+            using (Html.BeginForm("CreateNV", "NhanVien", FormMethod.Get))
+            {
+                <button type="submit" class="btn btn-primary">
+                    Create New
+                </button>
+            }
+
+        }
+
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Họ và tên
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Số điện thoại
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+
+            <th>
+                Chức vụ
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fullname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.phone_number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.role_id)
+                </td>
+                <td>
+                    @if (int.Parse(@Session["IDuser"].ToString()) == 1)
+                    {
+                        using (Html.BeginForm("EditNV", "NhanVien", new { id = item.id }, FormMethod.Get))
+                        {
+                            <button type="submit" class="btn btn-primary">
+                                Edit
+                            </button>
+                        }
+
+                        using (Html.BeginForm("DeleteNV", "NhanVien", new { id = item.id }, FormMethod.Get))
+                        {
+                            <button type="submit" class="btn btn-primary">
+                                Delete
+                            </button>
+                        }
+                    }
+
+
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

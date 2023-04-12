@@ -1,0 +1,80 @@
+﻿@model IEnumerable<DoAn.Models.DonHang>
+
+@{
+    ViewBag.Title = "DonHang";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h2>Đơn Hàng</h2>
+
+<p>
+   
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Mã khách hàng
+        </th>
+        <th>
+            Họ và tên
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Số điện thoại
+        </th>
+        <th>
+            Địa chỉ
+        </th>
+        <th>
+            Ghi chú
+        </th>
+        <th>
+            Ngày đặt hàng
+        </th>
+        <th>
+            Trạng thái
+        </th>
+        <th>
+            Tổng tiền
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.KH_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fullname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.phone_number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.note)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.order_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.total_money)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "DeleteDH", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
