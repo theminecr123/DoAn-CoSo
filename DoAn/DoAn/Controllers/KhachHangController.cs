@@ -303,7 +303,8 @@ namespace DoAn.Controllers
         {
             var password = collection["password"];
             var confirmPassword = collection["confirmPassword"];
-            var kh = data.KhachHangs.First(m => m.email == Session["emailReset"].ToString());
+            string emailReset = Session["emailReset"].ToString();
+            var kh = data.KhachHangs.Where(m => m.email == emailReset ).FirstOrDefault();
             if (otp == Session["OTP"].ToString())
             {
                 

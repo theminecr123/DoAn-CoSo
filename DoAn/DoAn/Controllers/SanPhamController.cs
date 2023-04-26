@@ -49,6 +49,7 @@ namespace DoAn.Controllers
             int pageNum = page ?? 1;
             return View(all_sp.ToPagedList(pageNum, pageSize));
         }
+      
 
         public ActionResult Detail(int id)
         {
@@ -64,10 +65,6 @@ namespace DoAn.Controllers
             
         }
 
-        public ActionResult In()
-        {
-            return View();
-        }
-        
+       
     }
 }

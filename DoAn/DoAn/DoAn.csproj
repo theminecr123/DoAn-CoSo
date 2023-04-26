@@ -60,6 +60,9 @@
     <Reference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation, Version=7.0.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.KeyDerivation.7.0.4\lib\net462\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.Amqp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.Amqp.2.6.2\lib\net45\Microsoft.Azure.Amqp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -470,22 +473,12 @@
     <Content Include="Views\NhanVien\SanPham.cshtml" />
     <Content Include="Views\Shared\_Admin.cshtml" />
     <Content Include="Views\NhanVien\KhachHang.cshtml" />
-    <Content Include="Views\NhanVien\CreateSP.cshtml" />
-    <Content Include="Views\NhanVien\EditSP.cshtml" />
-    <Content Include="Views\NhanVien\DeleteSP.cshtml" />
-    <Content Include="Views\NhanVien\CreateNV.cshtml" />
-    <Content Include="Views\NhanVien\EditNV.cshtml" />
-    <Content Include="Views\NhanVien\DeleteNV.cshtml" />
-    <Content Include="Views\NhanVien\CreateKH.cshtml" />
-    <Content Include="Views\NhanVien\EditKH.cshtml" />
-    <Content Include="Views\NhanVien\DeleteKH.cshtml" />
     <Content Include="Views\KhachHang\Info.cshtml" />
     <Content Include="Views\KhachHang\Edit.cshtml" />
     <Content Include="Views\KhachHang\changePassword.cshtml" />
     <Content Include="Views\KhachHang\forgotPass.cshtml" />
     <Content Include="Views\KhachHang\resetPass.cshtml" />
     <Content Include="Views\GioHang\PaymentConfirm.cshtml" />
-    <Content Include="Views\NhanVien\DeleteDH.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

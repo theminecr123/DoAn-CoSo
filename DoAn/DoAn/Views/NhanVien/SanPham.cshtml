@@ -8,13 +8,20 @@
 <h2>Sản Phẩm</h2>
 
 <p>
-    @using (Html.BeginForm("CreateSP", "NhanVien",FormMethod.Get))
-    {
-        <button type="submit" class="btn btn-primary">
-            Create New
-        </button>
-    }
 
+    <a href="#" class="btn btn-primary" id="btnCreate" data-toggle="modal" data-target="#modalCreate">
+        Create New
+    </a>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <label for="searchBox">Tìm kiếm</label>
+                <input type="search" id="txtSearchBox" placeholder="Tim Kiem...">
+
+                <button type="button" class="btn btn-primary" style="margin-left:10px;" id="btbSearch">Tìm kiếm</button>
+            </div>
+        </div>
+    </div>
 </p>
 <table>
     <tr>
@@ -36,37 +43,381 @@
 
         <th></th>
     </tr>
+    <tbody id="show_data"></tbody>
 
-    @foreach (var item in Model)
-    {
-
-        <tr class="spaceUnder">
+    @*<tfoot>
+        <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.id)
+               
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.price)
-            </td>
-            <td>
-                <img src="@item.thumbnail" width="150" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.quantity)
-            </td>
-
-            <td>
-                @Html.ActionLink("Edit", "EditSP", new { id = item.id }) |
-                @Html.ActionLink("Delete", "DeleteSP", new { id = item.id })
+            <td colspan="4" id="pagination">
+                
             </td>
         </tr>
-    }
+    </tfoot>*@
 
 </table>
 
 
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="  " aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <input type="hidden" id="id" value="0" />
+                        <label for="category" >Loại gạo</label>
+                        <select id="category">
+                            <option selected>Phân loại</option>
+                            <option value="1">Gạo dinh dưỡng</option>
+                            <option value="2">Gạo đóng túi</option>
+                            <option value="3">Gạo phổ thông</option>
+                            <option value="4">Gạo nếp</option>
+                        </select>
+                        <span class="error text-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                       
+                    </div>
+                    <div class="form-group">
+                        <label for="title" style="padding-top:20px">Tên sản phẩm</label>
+                        <input type="text" class="form-control" id="title" placeholder="Tên sản phẩm">
+                        <span class="error text-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="price" style="padding-top:20px">Giá</label>
+                        <input type="text" class="form-control" id="price" placeholder="Giá">
+                        <span class="error text-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="price" style="padding-top:20px">Hình ảnh</label>
+
+                        <input type="file" name="fileUpload" id="fileUpload" accept="image/*"
+                               style="display:none;" />
+                        <input type="button" id="btnUpload" value="Upload" class="btn btn-success" />
+                    </div>
+                    <div style="padding-top:20px" class="form-group">
+                        <img src="model.Hinh" id="thumbnail" width="300" height="300 " />
+                        <span class="error text-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity" style="padding-top:20px">Số lượng</label>
+                        <input type="number" class="form-control" id="quantity" placeholder="Số lượng">
+                        <p style="padding-top:10px" class="error text-danger"></p>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="description" style="padding-top:10px">Mô tả</label>
+                        <textarea class="form-control" id="description"></textarea>
+                        <span class="error text-danger"></span>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" id="btnLuu">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section upload
+{
+    <script>
+        $(function () {
+            $('#btnUpload').click(function () {
+                $('#fileUpload').trigger('click');
+            });
+        });
+        $('#fileUpload').change(function () {
+            if (window.FormData !== undefined) {
+                var fileUpload = $('#fileUpload').get(0);
+                var files = fileUpload.files;
+                var formData = new FormData();
+                formData.append('file', files[0]);
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '/NhanVien/ProcessUploadGao',
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+                            $('#thumbnail').attr('src', urlImage);
+                            $('#thumbnail').val(urlImage);
+                        },
+                        error: function (err) {
+                            alert('Error ', err.statusText)
+
+                        }
+                    });
+            }
+        });
+    </script>
+}
+@section scripts{
+   
+    <script>
+            $(document).ready(function () {
+                LoadData("");
+                $('body').on('click', '#btbSearch', function () {
+                    var txtSearch = $('#txtSearchBox').val();
+                    $('#show_data').html('');
+                    LoadData(txtSearch, null, 5);
+                });
+                $('body').on('click', '.btnCreate', function () {
+                    ResetInput();
+                });
+                $('#btnLuu').click(function () {
+                    var category = $('#category').val();
+                    var title = $('#title').val();
+                    var price = $('#price').val();
+                    var thumbnail = $('#thumbnail').val();
+                    var quantity = $('#quantity').val();
+                    var description = $('#description').val();
+                    var id = $('#id').val();
+                    var model = {
+                        DM_id: category,
+                        title: title,
+                        price: price,
+                        thumbnail: thumbnail,
+                        quantity: quantity,
+                        description: description,
+                        id: id
+                    };
+                    if (Validate()) {
+                        $.ajax({
+                            url: '/NhanVien/CreateUpdateSP',
+                            type: 'POST',
+                            data: model,
+                            success: function (res) {
+                                if (res.success) {
+                                    LoadData();
+                                    ResetInput();
+
+                                }
+                            }
+                        });
+                    }
+                   
+                    
+                    
+                });
+                $('body').on('click', '.btnEdit', function () {
+                    var id = $(this).data('id');
+                    GetDataById(id);
+                });
+
+                $('body').on('click', '.btnDelete', function (e) {
+                    e.preventDefault();
+                    var id = $(this).data('id');
+                    if (parseInt(id) > 0) {
+                        var conf = confirm('Ban co chac muon xoa ban ghi nay?');
+                        if (conf)
+                            DeleteRecord(id);
+                    }
+                });
+
+                function LoadData(_searchName) {
+                    $.ajax({
+                        url: '/NhanVien/GetProducts',
+                        type: 'GET',
+                        data: { searchName: _searchName },
+                        success: function (res) {
+                            if (res.TotalItems > 0) {
+                                var items = res.Data;
+                                var html = "";
+                                for (let i = 0; i < res.TotalItems; i++) {
+                                    html += "<tr>";
+                                    html += "<tr id='trow_" + items[i].id + "'>";
+                                    html += "<td>" + (i + 1) + "</td>";
+                                    switch (items[i].category) {
+                                        case 1:
+                                            html += "<td>" + 'Gạo dinh dưỡng  ' + "</td>";
+                                            break;
+                                        case 2:
+                                            html += "<td>" + 'Gạo đóng túi' + "</td>";
+                                            break;
+
+                                        case 3:
+                                            html += "<td>" + 'Gạo phổ thông' + "</td>";
+                                            break;
+
+                                        case 4:
+                                            html += "<td>" + 'Gạo nếp' + "</td>";
+                                            break;
+
+                                    }
+                                    html += "<td>" + items[i].title + "</td>";
+                                    html += "<td>" + items[i].price + "</td>";
+                                    html += "<td>" + "<img src="+items[i].thumbnail+" width="+250+" />" + "</td>";
+                                    html += "<td>" + items[i].quantity + "</td>";
+                                    html += "<td><a data-id='" + items[i].id + "' href='#' class='btn btn-warning btnEdit'>Sửa</a> | <a href='#' data-id='" + items[i].id + "' class='btn btn-danger btnDelete'>Xóa</a></td>";
+                                    html += "</tr>";
+                                }
+                                $('#show_data').html(html);
+                                
+
+                            }
+                        }
+                    });
+                }
+                //function Pagination(currentPage, NumberPage, pageSize) {
+                //    if (NumberPage > 0) {
+                //        debugger;
+                //        var html = `<nav aria-label="Page navigation example"> <ul class="pagination">`;
+                //        if (currentPage != 1) {
+                //            html += `<li class="page-item"><a class="page-link" onclick="NextPage(${currentPage - 1},${pageSize})" href="javascript:void(0);">Previous</a></li>`;
+                //        }
+                //        for (let i = 1; i <= NumberPage; i++) {
+                //            if (currentPage === i) {
+                //                html += ` <li class="page-item active"><a class="page-link" href="javascript:void(0);">${i}</a></li>`;
+                //            }
+                //            else {
+                //                html += ` <li class="page-item"><a class="page-link" onclick="NextPage(${i},${pageSize})" href="javascript:void(0);">${i}</a></li>`;
+                //            }
+                //        }
+                //        if (currentPage != NumberPage)
+                //            html += ` <li class="page-item"><a class="page-link" onclick="NextPage(${currentPage + 1},${pageSize})" href="javascript:void(0);">Next</a></li>`;
+                //        html += "</ul></nav>";
+                //        $('#pagination').html(html);
+                //    }
+
+                //}
+
+                
+
+                function DeleteRecord(id) {
+                    $.ajax({
+                        url: '/NhanVien/DeleteSP',
+                        type: 'POST',
+                        data: { id: id }                   
+                    }).done(function (res) {
+                        if (res.Success) {
+                            $('#trow_' + id).remove();
+                        }
+                    }).fail(function (err) {
+                        console.log(err);
+                    });
+                }
+                function GetDataById(id) {
+                    $.ajax({
+                        url: '/NhanVien/GetByIdSP',
+                        type: 'GET',
+                        data: { id: id },
+                        success: function (res) {
+                            if (res.data != null) {
+                                $('#category').val(res.data.DM_id);
+                                $('#title').val(res.data.title);
+                                $('#price').val(res.data.price);
+                                $('#thumbnail').val(res.data.thumbnail);
+                                $('#quantity').val(res.data.quantity);
+                                $('#description').val(res.data.description);
+                                $('#id').val(res.data.id);
+                                $('#modalCreate').modal('show');
+                            }
+                        }
+                    });
+                }
+                function ResetInput() {
+                    $('#category').val('');
+                    $('#title').val('');
+                    $('#price').val('');
+                    $('#thumbnail').attr('src', null);
+                    $('#thumbnail').val(null);
+
+                    $('#quantity').val('');
+                    $('#description').val('');
+                    $('#id').val('');
+                
+                }
+                function Validate() {
+                    var check = false;
+                    var name = $('#title').val();
+                    if (name === '') {
+                        $('#title').next().html('Tên sản phẩm không được để trống!');
+                        check = false;
+                    } else {
+                        $('#title').next().html('');
+                        check = true;
+                    }
+
+                    var name = $('#category').val();
+                    if (name === '') {
+                        $('#category').next().html('Vui lòng chọn Danh mục Sản phẩm!');
+                        check = false;
+                    } else {
+                        $('#category').next().html('');
+                        check = true;
+                    }
+
+                    var name = $('#price').val();
+                    if (name === '') {
+                        $('#price').next().html('Giá sản phẩm không được để trống!');
+                        check = false;
+                    } else {
+                        $('#price').next().html('');
+                        check = true;
+                    }
+
+                    var name = $('#thumbnail').val();
+                    if (name === '') {
+                        $('#thumbnail').next().html('Vui lòng chọn Hình ảnh cho Sản phẩm!');
+                        check = false;
+                    } else {
+                        $('#thumbnail').next().html('');
+                        check = true;
+                    }
+
+                    var name = $('#quantity').val();
+                    if (name === '') {
+                        $('#quantity').next().html('Số lượng sản phẩm không được để trống!');
+                        check = false;
+                    } else {
+                        $('#quantity').next().html('');
+                        check = true;
+                    }
+
+                    var age = $('#description').val();
+                    if (age === '') {
+                        $('#description').next().html('Miêu tả sản phẩm không được để trống!');
+                        check = false;
+                    } else {
+                        $('#description').next().html('');
+                        check = true;
+                    }
+                    return check;
+                }
+
+                function hideModal() {
+                    $("#modalCreate").removeClass("in");
+                    $(".modal-backdrop").remove();
+                    $('body').removeClass('modal-open');
+                    $('body').css('padding-right', '');
+                    $("#modalCreate").hide();
+                }
+                //function NextPage(page, pageSize) {
+                //    var txtSearch = $('#txtSearchBox').val();
+                //    LoadData(txtSearch, page, pageSize);
+                //}
+            });
+    </script>
+
+}
 
 
 <style>
@@ -79,3 +430,4 @@
         text-align: center;
     }
 </style>
+
