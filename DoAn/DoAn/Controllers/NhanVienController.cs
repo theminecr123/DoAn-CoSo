@@ -60,6 +60,7 @@ namespace DoAn.Controllers
                 if(VerifyPassword(password, nv.password))
                 {
                     ViewBag.ThongBao = "Đã đăng nhập!";
+                    Session["IDNV"] = nv.id;
                     Session["TaiKhoan"] = nv;
                     Session["IDuser"] = nv.role_id;
                     Session["Name"] = nv.fullname;
@@ -303,7 +304,7 @@ namespace DoAn.Controllers
             }
             else
             {
-                staffs.password = HashPassword(staffs.password);
+                staffs.password = HashPassword("Aa@123456");
                 data.NhanViens.Add(staffs);
 
             }
@@ -320,6 +321,54 @@ namespace DoAn.Controllers
             }
         }
 
+        public ActionResult Info(int? id)
+        {
+
+            if (id == null || Session["IDNV"] == null)
+                return RedirectToAction("Index", "Home");
+            else if (id != int.Parse(Session["IDNV"].ToString()))
+            {
+                return RedirectToAction("Info", "NhanVien", new { id = int.Parse(Session["IDKH"].ToString()) });
+
+            }
+            var nv = data.NhanViens.First(x => x.id == id);
+            return View(nv);
+        }
+
+        public ActionResult changePassword(int? id)
+        {
+            
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult changePassword(int id, FormCollection collection)
+        {
+            var kh = data.NhanViens.First(m => m.id == id);
+            var oldPassword = collection["oldPassword"];
+            var password = collection["password"];
+            var confirmPassword = collection["confirmPassword"];
+            kh.id = id;
+            if (!Equals(password, confirmPassword))
+            {
+                ViewData["passwordGiongNhau"] = "Mật khẩu và Mật khẩu xác nhận phải giống nhau";
+                return View(kh);
+            }
+
+            if (VerifyPassword(oldPassword, kh.password))
+            {
+                kh.password = HashPassword(password);
+                data.SaveChanges();
+                return RedirectToAction("Info", "KhachHang", new { id = kh.id });
+
+            }
+
+            else
+            {
+                ViewData["saiMK"] = "Mật khẩu sai";
+                return View(kh);
+            }
+        }
 
         [HttpPost]
         public JsonResult DeleteNV(int? id)

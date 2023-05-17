@@ -34,7 +34,18 @@
                 }
                 else
                 {
-                    <h4>@Session["Name"].ToString()</h4>
+                    using (Html.BeginForm("Info", "NhanVien", new { id = int.Parse(Session["IDNV"].ToString()) }))
+                    {
+                        <div class="container-log">
+                            <div>
+                                <button class="log" style="width:100%">
+                                    @Session["Name"].ToString()
+
+                                </button>
+
+                            </div>
+                        </div>
+                    }
                     @Html.ActionLink("Logout", "Logout", "KhachHang")
 
                 }

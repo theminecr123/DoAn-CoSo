@@ -13,21 +13,24 @@
 </head>
 <body>
 
-    <p>
+    <p class="changepass">
+        @Html.ActionLink("Đổi mật khẩu", "changePassword", new { id = 2 })
+    </p>
+    
 
-        <a href="#" class="btn btn-primary" id="btnCreate" data-toggle="modal" data-target="#modalCreate">
-            Create New
-        </a>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <label for="searchBox">Tìm kiếm</label>
-                    <input type="search" id="txtSearchBox" placeholder="Tim Kiem...">
+    <a href="#" class="btn btn-primary" id="btnCreate" data-toggle="modal" data-target="#modalCreate">
+        Create New
+    </a>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <label for="searchBox">Tìm kiếm</label>
+                <input type="search" id="txtSearchBox" placeholder="Tim Kiem...">
 
-                    <button type="button" class="btn btn-primary" style="margin-left:10px;" id="btbSearch">Tìm kiếm</button>
-                </div>
+                <button type="button" class="btn btn-primary" style="margin-left:10px;" id="btbSearch">Tìm kiếm</button>
             </div>
         </div>
+    </div>
     </p>
     <table class="table">
         <tr>
@@ -98,14 +101,7 @@
                         <span class="error text-danger"></span>
 
 
-                    </div>
-                    <div class="form-group">
-                        <label for="password" style="padding-top:20px">Password</label>
-                        <input type="text" class="form-control" id="password" placeholder="Password">
-                        <span class="error text-danger"></span>
-
-
-                    </div>
+                    </div>                  
                     <div class="form-group">
                         <label for="role_id">Chức vụ</label>
                         <select id="role_id">
@@ -184,11 +180,11 @@
                     e.preventDefault();
                     var id = $(this).data('id');
                     if (parseInt(id) > 0) {
-                        var conf = confirm('Ban co chac muon xoa ban ghi nay?');
+                        var conf = confirm('Xóa nhân viên này?');
                         if (conf)
                             DeleteRecord(id);
                     }
-                });
+                });        
 
                 function LoadData(_searchName) {
                     $.ajax({
@@ -215,7 +211,7 @@
                                             html += "<td>" + 'Nhân Viên' + "</td>";
                                             break;
                                     }
-                                    html += "<td><a data-id='" + items[i].id + "' href='#' class='btn btn-warning btnEdit'>Sửa</a> | <a href='#' data-id='" + items[i].id + "' class='btn btn-danger btnDelete'>Xóa</a></td>";
+                                    html += "<td><a data-id='" + items[i].id + "' href='#' class='btn btn-warning btnEdit'>Sửa</a></td>";
                                     html += "</tr>";
                                 }
                                 $('#show_data').html(html);
@@ -326,7 +322,7 @@
                         check = true;
                     }
 
-                    
+
                     var phone_number = $('#phone_number').val();
                     if (phone_number === '') {
                         $('#phone_number').next().html('Giá sản phẩm không được để trống!');
@@ -361,7 +357,7 @@
                         $('#role_id').next().html('');
                         check = true;
                     }
-                    
+
                     return check;
                 }
 

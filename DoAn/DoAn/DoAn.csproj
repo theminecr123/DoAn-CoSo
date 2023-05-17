@@ -73,9 +73,6 @@
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.7.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.Identity.Core, Version=7.0.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Identity.Core.7.0.4\lib\net462\Microsoft.Extensions.Identity.Core.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Extensions.Logging, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Logging.7.0.0\lib\net462\Microsoft.Extensions.Logging.dll</HintPath>
     </Reference>
@@ -479,6 +476,8 @@
     <Content Include="Views\KhachHang\forgotPass.cshtml" />
     <Content Include="Views\KhachHang\resetPass.cshtml" />
     <Content Include="Views\GioHang\PaymentConfirm.cshtml" />
+    <Content Include="Views\NhanVien\changePassword.cshtml" />
+    <Content Include="Views\NhanVien\Info.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

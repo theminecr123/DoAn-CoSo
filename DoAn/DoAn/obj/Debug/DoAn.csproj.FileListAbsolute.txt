@@ -794,7 +794,6 @@ C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Bcl.AsyncInterf
 C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Extensions.DependencyInjection.dll
-C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Extensions.Identity.Core.dll
 C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Extensions.Logging.dll
 C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Extensions.Options.dll
@@ -834,7 +833,6 @@ C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Azure.Amqp.xml
 C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Extensions.DependencyInjection.xml
 C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Extensions.DependencyInjection.Abstractions.xml
-C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Extensions.Identity.Core.xml
 C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Extensions.Logging.xml
 C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Extensions.Logging.Abstractions.xml
 C:\Users\DongTrieu\Desktop\Test-DoAnCoSo\DoAn\DoAn\bin\Microsoft.Extensions.Options.xml

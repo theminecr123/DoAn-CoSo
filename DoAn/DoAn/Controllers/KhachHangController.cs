@@ -1,7 +1,6 @@
 ﻿using DoAn.common;
 using DoAn.Models;
 using Facebook;
-using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
