@@ -1,4 +1,5 @@
-﻿using DoAn.Models;
+﻿using DoAn.App_Start;
+using DoAn.Models;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using PagedList;
@@ -15,14 +16,17 @@ using System.Web.UI;
 
 namespace DoAn.Controllers
 {
+    
     public class NhanVienController : Controller
     {
+
         RiceStoreEntities data = new RiceStoreEntities();
         // GET: Admin
 
 
         public static string HashPassword(string password)
         {
+            
             using (var sha256 = new SHA256Managed())
             {
                 var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
@@ -59,6 +63,7 @@ namespace DoAn.Controllers
             {
                 if(VerifyPassword(password, nv.password))
                 {
+                    
                     ViewBag.ThongBao = "Đã đăng nhập!";
                     Session["IDNV"] = nv.id;
                     Session["TaiKhoan"] = nv;
@@ -89,21 +94,59 @@ namespace DoAn.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
-        public ActionResult Index()
+        public List<sp_BaoCaoTheoNam_Result> BaoCaoSanPhamNam(int year)
         {
+            using (RiceStoreEntities data = new RiceStoreEntities())
+            {
+                var lsData = data.sp_BaoCaoTheoNam(year).ToList();
+                return lsData;
+            }
 
-            if (Session["TaiKhoan"] == null || Session["TaiKhoan"].ToString() == "")
+        }
+
+        public List<sp_BaoCaoSPTheoNamThang_Result> BaoCaoSanPhamThang(int year, int month)
+        {
+            using (RiceStoreEntities data = new RiceStoreEntities())
             {
-                return RedirectToAction("FlatLogin", "NhanVien");
+                var lsData = data.sp_BaoCaoSPTheoNamThang(year,month).ToList();
+                return lsData;
             }
-            if (int.Parse(Session["IDuser"].ToString()) == 2 )
+
+        }
+
+        public List<sp_BaoCaoDoanhThuNam_Result> BaoCaoDoanhThuNam(int year)
+        {
+            using (RiceStoreEntities data = new RiceStoreEntities())
             {
-                return RedirectToAction("FlatLogin", "NhanVien");
+                var lsData = data.sp_BaoCaoDoanhThuNam(year).ToList();
+                return lsData;
             }
+
+        }
+
+        public List<sp_BaoCaoDoanhThuNamThang_Result> BaoCaoDoanhThuThang(int year,int month)
+        {
+            using (RiceStoreEntities data = new RiceStoreEntities())
+            {
+                var lsData = data.sp_BaoCaoDoanhThuNamThang(year,month).ToList();
+                return lsData;
+            }
+
+        }
+
+        [HttpGet]
+        [UserAuthorize]
+        public ActionResult Index()
+        {           
             return View();
         }
 
+        [UserAuthorize]
+        public ActionResult BaoCaoSPNam(int year)
+        {
+            var LsData = BaoCaoSanPhamNam(year);
+            return Json(LsData, JsonRequestBehavior.AllowGet);
+        }
        
         public string ProcessUploadGao(HttpPostedFileBase file)
         {
@@ -114,15 +157,15 @@ namespace DoAn.Controllers
             file.SaveAs(Server.MapPath("~/Content/images/Gao/" + file.FileName));
             return "/Content/images/Gao/" + file.FileName;
         }
-      
+
 
         /*KhachHang*/
-
+        [UserAuthorize]
         public ActionResult KhachHang()
         {
             return View();
         }
-
+        [UserAuthorize]
         public ActionResult GetCustomers(string searchName)
         {
             List<KhachHang> customers = null;
@@ -149,6 +192,7 @@ namespace DoAn.Controllers
        
 
         [HttpPost]
+        [UserAuthorize]
         public ActionResult CreateKH(KhachHang customers)
         {
            
@@ -170,6 +214,7 @@ namespace DoAn.Controllers
 
 
         [HttpPost]
+        [UserAuthorize]
         public JsonResult DeleteKH(int? id)
         {
             var customers = data.KhachHangs.Find(id);
@@ -190,10 +235,13 @@ namespace DoAn.Controllers
         /*DonHang*/
 
         //-----------------------------------------
+        [UserAuthorize]
         public ActionResult DonHang()
         {
             return View();
         }
+
+        [UserAuthorize]
         public ActionResult GetOrders(string searchName)
         {
             List<DonHang> orders = null;
@@ -217,6 +265,7 @@ namespace DoAn.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        [UserAuthorize]
         public ActionResult GetByIdDH(int? id)
         {
             data.Configuration.ProxyCreationEnabled = false;
@@ -224,6 +273,7 @@ namespace DoAn.Controllers
             return Json(new { data = item }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
+        [UserAuthorize]
         public ActionResult UpdateDH(DonHang orders)
         {
             if (orders.id > 0)
@@ -243,6 +293,7 @@ namespace DoAn.Controllers
 
 
         [HttpPost]
+        [UserAuthorize]
         public JsonResult DeleteDH(int? id)
         {
             var orders = data.DonHangs.Find(id);
@@ -258,10 +309,12 @@ namespace DoAn.Controllers
         /*end DonHang*/
 
         /*NhanVien*/
+        [UserAuthorize]
         public ActionResult NhanVien()
         {
             return View();
         }
+        [UserAuthorize]
         public ActionResult GetStaffs(string searchName)
         {
             List<NhanVien> staffs = null;
@@ -285,6 +338,7 @@ namespace DoAn.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        [UserAuthorize]
         public ActionResult GetByIdNV(int? id)
         {
             data.Configuration.ProxyCreationEnabled = false;
@@ -293,6 +347,7 @@ namespace DoAn.Controllers
         }
 
         [HttpPost]
+        [UserAuthorize(ChucNang = 1)]
         public ActionResult CreateUpdateNV(NhanVien staffs)
         {
             if (staffs.id > 0)
@@ -320,7 +375,7 @@ namespace DoAn.Controllers
 
             }
         }
-
+        [UserAuthorize]
         public ActionResult Info(int? id)
         {
 
@@ -335,6 +390,7 @@ namespace DoAn.Controllers
             return View(nv);
         }
 
+        [UserAuthorize]
         public ActionResult changePassword(int? id)
         {
             
@@ -342,6 +398,7 @@ namespace DoAn.Controllers
         }
 
         [HttpPost]
+        [UserAuthorize]
         public ActionResult changePassword(int id, FormCollection collection)
         {
             var kh = data.NhanViens.First(m => m.id == id);
@@ -371,6 +428,7 @@ namespace DoAn.Controllers
         }
 
         [HttpPost]
+        [UserAuthorize(ChucNang = 1)]
         public JsonResult DeleteNV(int? id)
         {
             var staffs = data.NhanViens.Find(id);
@@ -387,10 +445,13 @@ namespace DoAn.Controllers
         /*end NhanVien*/
 
         /*SanPham*/
+        [UserAuthorize]
         public ActionResult SanPham()
         {           
             return View();
         }
+
+        [UserAuthorize]
         public ActionResult GetProducts(string searchName)
         {
             List<SanPham> products = null;
@@ -414,6 +475,7 @@ namespace DoAn.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        [UserAuthorize]
         public ActionResult GetByIdSP(int? id)
         {
             data.Configuration.ProxyCreationEnabled = false;
@@ -422,6 +484,7 @@ namespace DoAn.Controllers
         }
 
         [HttpPost]
+        [UserAuthorize]
         public ActionResult CreateUpdateSP(SanPham sp)
         {
             if (sp.id > 0)
@@ -447,6 +510,7 @@ namespace DoAn.Controllers
 
 
         [HttpPost]
+        [UserAuthorize]
         public JsonResult DeleteSP(int? id)
         {
             var sp = data.SanPhams.Find(id);

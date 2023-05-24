@@ -5,20 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="35e7eba0b86f4286b59e7befb3c48c99" Name="Diagram1">
-        <EntityTypeShape EntityType="RiceStoreModel.ChiTietDonHang" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RiceStoreModel.DanhMuc" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RiceStoreModel.DonHang" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="RiceStoreModel.FeedBack" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RiceStoreModel.KhachHang" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RiceStoreModel.NhanVien" Width="1.5" PointX="3.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RiceStoreModel.PhanQuyen" Width="1.5" PointX="1.5" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RiceStoreModel.SanPham" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="RiceStoreModel.FK_ChiTietDonHang_DonHang" ManuallyRouted="false" />
-        <AssociationConnector Association="RiceStoreModel.FK_ChiTietDonHang_SanPham" ManuallyRouted="false" />
-        <AssociationConnector Association="RiceStoreModel.FK_SanPham_DanhMuc" ManuallyRouted="false" />
-        <AssociationConnector Association="RiceStoreModel.FK_DonHang_KhachHang" ManuallyRouted="false" />
-        <AssociationConnector Association="RiceStoreModel.FK_KhachHang_PhanQuyen" ManuallyRouted="false" />
-        <AssociationConnector Association="RiceStoreModel.FK_NhanVien_PhanQuyen" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="RiceStoreModel.ChiTietDonHang" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="RiceStoreModel.DanhMuc" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="RiceStoreModel.DonHang" Width="1.5" PointX="3" PointY="6.375" />
+        <EntityTypeShape EntityType="RiceStoreModel.FeedBack" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="RiceStoreModel.KhachHang" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="RiceStoreModel.NhanVien" Width="1.5" PointX="3.75" PointY="10.75" />
+        <EntityTypeShape EntityType="RiceStoreModel.PhanQuyen" Width="1.5" PointX="1.5" PointY="11.125" />
+        <EntityTypeShape EntityType="RiceStoreModel.SanPham" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="RiceStoreModel.FK_ChiTietDonHang_DonHang" />
+        <AssociationConnector Association="RiceStoreModel.FK_ChiTietDonHang_SanPham" />
+        <AssociationConnector Association="RiceStoreModel.FK_SanPham_DanhMuc" />
+        <AssociationConnector Association="RiceStoreModel.FK_DonHang_KhachHang" />
+        <AssociationConnector Association="RiceStoreModel.FK_KhachHang_PhanQuyen" />
+        <AssociationConnector Association="RiceStoreModel.FK_NhanVien_PhanQuyen" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

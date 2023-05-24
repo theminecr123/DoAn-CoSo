@@ -34,18 +34,27 @@
                 }
                 else
                 {
-                    using (Html.BeginForm("Info", "NhanVien", new { id = int.Parse(Session["IDNV"].ToString()) }))
+                    if (int.Parse((Session["IDUser"]).ToString()) == 2)
                     {
-                        <div class="container-log">
-                            <div>
-                                <button class="log" style="width:100%">
-                                    @Session["Name"].ToString()
+                        Response.Redirect("/Home/Index");
 
-                                </button>
-
-                            </div>
-                        </div>
                     }
+                    else
+                    {
+                        using (Html.BeginForm("Info", "NhanVien", new { id = int.Parse(Session["IDNV"].ToString()) }))
+                        {
+                            <div class="container-log">
+                                <div>
+                                    <button class="log" style="width:100%">
+                                        @Session["Name"].ToString()
+
+                                    </button>
+
+                                </div>
+                            </div>
+                        }
+                    }
+
                     @Html.ActionLink("Logout", "Logout", "KhachHang")
 
                 }
@@ -58,23 +67,30 @@
     <div class="container">
         <nav>
             <div class="side_navbar">
+
                 <span>Main Menu</span>
-                <a href="@Url.Action("Index","NhanVien")">Dashboard</a>
-                <a href="@Url.Action("SanPham","NhanVien")">Product</a>
+                <div class="dropdown">
+                    <a id="dropbtn" href="@Url.Action("Index","NhanVien")">Dashboard</a>
+                    <div class="dropdown-content">
+                        <a href="@Url.Action("Product","NhanVien")">Product</a>
+                        <a href="@Url.Action("Revenue","NhanVien")">Revenue</a>
+                    </div>
+                </div>
                 <a href="@Url.Action("NhanVien","NhanVien")">Staff</a>
                 <a href="@Url.Action("DonHang","NhanVien")">Order</a>
                 <a href="@Url.Action("KhachHang","NhanVien")">Customer</a>
 
+               
 
                 @*<a href="#">My Account</a>
-                    <a href="#">Documnets</a>*@
+        <a href="#">Documnets</a>*@
 
                 @*<div class="links">
-                        <span>Quick Link</span>
-                        <a href="#">Paypal</a>
-                        <a href="#">EasyPay</a>
-                        <a href="#">SadaPay</a>
-                    </div>*@
+            <span>Quick Link</span>
+            <a href="#">Paypal</a>
+            <a href="#">EasyPay</a>
+            <a href="#">SadaPay</a>
+        </div>*@
             </div>
         </nav>
 
@@ -102,6 +118,8 @@
 
 </body>
 </html>
+
+
 <style>
     @@import 'bootstrap/dist/css/bootstrap.min.css';
     /*  import google fonts */
@@ -195,6 +213,33 @@
     }
 
     /* Side menubar section */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        top: -10px;
+        left: 150px;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
     nav {
         background: #fff;
     }

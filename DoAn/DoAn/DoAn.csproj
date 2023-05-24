@@ -210,6 +210,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\UserAuthorize.cs" />
     <Compile Include="common\ChangePassword.cs" />
     <Compile Include="common\MailHelper.cs" />
     <Compile Include="common\PayCompare.cs" />
@@ -261,6 +262,18 @@
       <DependentUpon>MyData.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SanPham.cs">
+      <DependentUpon>MyData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_BaoCaoDoanhThuNamThang_Result.cs">
+      <DependentUpon>MyData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_BaoCaoDoanhThuNam_Result.cs">
+      <DependentUpon>MyData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_BaoCaoSPTheoNamThang_Result.cs">
+      <DependentUpon>MyData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_BaoCaoTheoNam_Result.cs">
       <DependentUpon>MyData.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

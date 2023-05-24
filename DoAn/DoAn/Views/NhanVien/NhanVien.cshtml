@@ -211,7 +211,7 @@
                                             html += "<td>" + 'Nhân Viên' + "</td>";
                                             break;
                                     }
-                                    html += "<td><a data-id='" + items[i].id + "' href='#' class='btn btn-warning btnEdit'>Sửa</a></td>";
+                                    html += "<td><a data-id='" + items[i].id + "' href='#' class='btn btn-warning btnEdit'>Sửa</a>| <a data-id='" + items[i].id + "' href='#' class='btn btn-primary btnDelete'>Xóa</a></td>";
                                     html += "</tr>";
                                 }
                                 $('#show_data').html(html);
@@ -303,63 +303,64 @@
                 }
 
                 function Validate() {
-                    var check = false;
+                    var check = true;
                     var fullname = $('#fullname').val();
                     if (fullname === '') {
-                        $('#fullname').next().html('Vui lòng chọn Danh mục Sản phẩm!');
+                        $('#fullname').next().html('Tên Khách hàng không được để trống');
                         check = false;
                     } else {
                         $('#fullname').next().html('');
-                        check = true;
+
                     }
 
                     var email = $('#email').val();
+                    var emailPattern = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+
                     if (email === '') {
-                        $('#email').next().html('Tên sản phẩm không được để trống!');
+                        $('#email').next().html('Email không được để trống!');
+                        check = false;
+                    } else if (!emailPattern.test(email)) {
+                        $('#email').next().html('Email không hợp lệ!');
                         check = false;
                     } else {
                         $('#email').next().html('');
-                        check = true;
+
                     }
 
-
                     var phone_number = $('#phone_number').val();
+                    var phone_regex = /^\d{10}$/;
+
                     if (phone_number === '') {
-                        $('#phone_number').next().html('Giá sản phẩm không được để trống!');
+                        $('#phone_number').next().html('Số điện thoại không được để trống!');
+                        check = false;
+                    } else if (!phone_regex.test(phone_number)) {
+                        $('#phone_number').next().html('Số điện thoại phải có 10 số!');
                         check = false;
                     } else {
                         $('#phone_number').next().html('');
-                        check = true;
                     }
 
                     var address = $('#address').val();
                     if (address === '') {
-                        $('#address').next().html('Vui lòng chọn Hình ảnh cho Sản phẩm!');
+                        $('#address').next().html('Địa chỉ không được để trống');
                         check = false;
                     } else {
                         $('#address').next().html('');
-                        check = true;
+
                     }
 
-                    var password = $('#password').val();
-                    if (password === '') {
-                        $('#password').next().html('Số lượng sản phẩm không được để trống!');
-                        check = false;
-                    } else {
-                        $('#password').next().html('');
-                        check = true;
-                    }
                     var role_id = $('#role_id').val();
                     if (role_id === '0') {
-                        $('#role_id').next().html('Miêu tả sản phẩm không được để trống!');
+                        $('#role_id').next().html('Chức vụ không được để trống!');
                         check = false;
                     } else {
                         $('#role_id').next().html('');
-                        check = true;
+
                     }
 
                     return check;
                 }
+
 
                 function hideModal() {
                     $("#modalCreate").removeClass("in");

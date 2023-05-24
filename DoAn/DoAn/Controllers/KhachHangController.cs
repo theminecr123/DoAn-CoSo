@@ -169,7 +169,6 @@ namespace DoAn.Controllers
 
         public ActionResult Info(int? id)
         {
-            
             if (id == null || Session["IDKH"] == null)
                 return RedirectToAction("Index", "Home");
             else if(id != int.Parse(Session["IDKH"].ToString()))
@@ -186,6 +185,12 @@ namespace DoAn.Controllers
             if (id == null)
             {
                 return RedirectToAction("FlatLogin", "KhachHang");
+
+            }
+            else if (id != int.Parse(Session["IDKH"].ToString()))
+            {
+                ViewBag.Message = "Bạn không thể truy cập vào thông tin người khác!";
+                return RedirectToAction("Info", "KhachHang", new { id = int.Parse(Session["IDKH"].ToString()) });
 
             }
             var kh = data.KhachHangs.First(m => m.id == id);
@@ -220,9 +225,16 @@ namespace DoAn.Controllers
         }
         public ActionResult changePassword(int? id)
         {
+
             if (id == null)
             {
                 return RedirectToAction("FlatLogin", "KhachHang");
+
+            }
+            else if (id != int.Parse(Session["IDKH"].ToString()))
+            {
+                ViewBag.Message = "Bạn không thể truy cập vào thông tin người khác!";
+                return RedirectToAction("Info", "KhachHang", new { id = int.Parse(Session["IDKH"].ToString()) });
 
             }
             var kh = data.KhachHangs.First(m => m.id == id);

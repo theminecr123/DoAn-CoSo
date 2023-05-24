@@ -243,41 +243,59 @@
 
             }
             function Validate() {
-                var check = false;
+                var check = true;
                 var name = $('#fullname').val();
                 if (name === '') {
-                    $('#fullname').next().html('Tên sản phẩm không được để trống!');
+                    $('#fullname').next().html('Tên khách hàng được để trống!');
                     check = false;
                 } else {
                     $('#fullname').next().html('');
-                    check = true;
+
                 }
 
-                var name = $('#email').val();
-                if (name === '') {
-                    $('#email').next().html('Vui lòng chọn Danh mục Sản phẩm!');
+                var email = $('#email').val();
+                var emailPattern = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+
+                if (email === '') {
+                    $('#email').next().html('Email không được để trống!');
+                    check = false;
+                } else if (!emailPattern.test(email)) {
+                    $('#email').next().html('Email không hợp lệ!');
                     check = false;
                 } else {
                     $('#email').next().html('');
-                    check = true;
+
                 }
 
-                var name = $('#phone_number').val();
-                if (name === '') {
-                    $('#phone_number').next().html('Giá sản phẩm không được để trống!');
+                var phone_number = $('#phone_number').val();
+                var phone_regex = /^\d{10}$/;
+
+                if (phone_number === '') {
+                    $('#phone_number').next().html('Số điện thoại không được để trống!');
+                    check = false;
+                } else if (!phone_regex.test(phone_number)) {
+                    $('#phone_number').next().html('Số điện thoại phải có 10 số!');
                     check = false;
                 } else {
                     $('#phone_number').next().html('');
-                    check = true;
                 }
 
                 var name = $('#address').val();
                 if (name === '') {
-                    $('#address').next().html('Vui lòng chọn Hình ảnh cho Sản phẩm!');
+                    $('#address').next().html('Địa chỉ không được để trống!');
                     check = false;
                 } else {
                     $('#address').next().html('');
-                    check = true;
+
+                }
+
+                var name = $('#password').val();
+                if (name === '') {
+                    $('#password').next().html('Mật khẩu không được để trống!');
+                    check = false;
+                } else {
+                    $('#password').next().html('');
+
                 }
 
                 return check;

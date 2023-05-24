@@ -1,96 +1,105 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="RiceStoreModelStoreContainer" CdmEntityContainer="RiceStoreEntities">
+    <FunctionImportMapping FunctionImportName="sp_BaoCaoTheoNam" FunctionName="RiceStoreModel.Store.sp_BaoCaoTheoNam">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="RiceStoreModel.sp_BaoCaoTheoNam_Result">
+          <ScalarProperty Name="years" ColumnName="years" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="total" ColumnName="total" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <EntitySetMapping Name="ChiTietDonHangs">
       <EntityTypeMapping TypeName="RiceStoreModel.ChiTietDonHang">
         <MappingFragment StoreEntitySet="ChiTietDonHang">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="order_id" ColumnName="order_id" />
-          <ScalarProperty Name="product_id" ColumnName="product_id" />
-          <ScalarProperty Name="num" ColumnName="num" />
           <ScalarProperty Name="total_money" ColumnName="total_money" />
+          <ScalarProperty Name="num" ColumnName="num" />
+          <ScalarProperty Name="product_id" ColumnName="product_id" />
+          <ScalarProperty Name="order_id" ColumnName="order_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DanhMucs">
       <EntityTypeMapping TypeName="RiceStoreModel.DanhMuc">
         <MappingFragment StoreEntitySet="DanhMuc">
-          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DonHangs">
       <EntityTypeMapping TypeName="RiceStoreModel.DonHang">
         <MappingFragment StoreEntitySet="DonHang">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="KH_id" ColumnName="KH_id" />
-          <ScalarProperty Name="fullname" ColumnName="fullname" />
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-          <ScalarProperty Name="address" ColumnName="address" />
-          <ScalarProperty Name="note" ColumnName="note" />
-          <ScalarProperty Name="order_date" ColumnName="order_date" />
-          <ScalarProperty Name="status" ColumnName="status" />
           <ScalarProperty Name="total_money" ColumnName="total_money" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="order_date" ColumnName="order_date" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="fullname" ColumnName="fullname" />
+          <ScalarProperty Name="KH_id" ColumnName="KH_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="FeedBacks">
       <EntityTypeMapping TypeName="RiceStoreModel.FeedBack">
         <MappingFragment StoreEntitySet="FeedBack">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="fullname" ColumnName="fullname" />
-          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-          <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+          <ScalarProperty Name="fullname" ColumnName="fullname" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="KhachHangs">
       <EntityTypeMapping TypeName="RiceStoreModel.KhachHang">
         <MappingFragment StoreEntitySet="KhachHang">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="fullname" ColumnName="fullname" />
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-          <ScalarProperty Name="address" ColumnName="address" />
-          <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="role_id" ColumnName="role_id" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="fullname" ColumnName="fullname" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="NhanViens">
       <EntityTypeMapping TypeName="RiceStoreModel.NhanVien">
         <MappingFragment StoreEntitySet="NhanVien">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="fullname" ColumnName="fullname" />
-          <ScalarProperty Name="email" ColumnName="email" />
-          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-          <ScalarProperty Name="address" ColumnName="address" />
-          <ScalarProperty Name="password" ColumnName="password" />
           <ScalarProperty Name="role_id" ColumnName="role_id" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="fullname" ColumnName="fullname" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PhanQuyens">
       <EntityTypeMapping TypeName="RiceStoreModel.PhanQuyen">
         <MappingFragment StoreEntitySet="PhanQuyen">
-          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="SanPhams">
       <EntityTypeMapping TypeName="RiceStoreModel.SanPham">
         <MappingFragment StoreEntitySet="SanPham">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="DM_id" ColumnName="DM_id" />
-          <ScalarProperty Name="title" ColumnName="title" />
-          <ScalarProperty Name="price" ColumnName="price" />
-          <ScalarProperty Name="thumbnail" ColumnName="thumbnail" />
-          <ScalarProperty Name="quantity" ColumnName="quantity" />
           <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="quantity" ColumnName="quantity" />
+          <ScalarProperty Name="thumbnail" ColumnName="thumbnail" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="DM_id" ColumnName="DM_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -346,14 +346,14 @@
                 
                 }
                 function Validate() {
-                    var check = false;
+                    var check = true;
                     var name = $('#title').val();
                     if (name === '') {
                         $('#title').next().html('Tên sản phẩm không được để trống!');
                         check = false;
                     } else {
                         $('#title').next().html('');
-                        check = true;
+
                     }
 
                     var name = $('#category').val();
@@ -362,16 +362,18 @@
                         check = false;
                     } else {
                         $('#category').next().html('');
-                        check = true;
+
                     }
 
-                    var name = $('#price').val();
-                    if (name === '') {
+                    var price = $('#price').val();
+                    if (price === '') {
                         $('#price').next().html('Giá sản phẩm không được để trống!');
+                        check = false;
+                    } else if (parseFloat(price) < 1) {
+                        $('#price').next().html('Giá sản phẩm không được nhỏ hơn 0!');
                         check = false;
                     } else {
                         $('#price').next().html('');
-                        check = true;
                     }
 
                     var name = $('#thumbnail').val();
@@ -380,16 +382,18 @@
                         check = false;
                     } else {
                         $('#thumbnail').next().html('');
-                        check = true;
+
                     }
 
-                    var name = $('#quantity').val();
-                    if (name === '') {
+                    var quantity = $('#quantity').val();
+                    if (quantity === '') {
                         $('#quantity').next().html('Số lượng sản phẩm không được để trống!');
+                        check = false;
+                    } else if (parseInt(quantity) < 1) {
+                        $('#quantity').next().html('Số lượng sản phẩm phải lớn hơn 0');
                         check = false;
                     } else {
                         $('#quantity').next().html('');
-                        check = true;
                     }
 
                     var age = $('#description').val();
@@ -398,8 +402,9 @@
                         check = false;
                     } else {
                         $('#description').next().html('');
-                        check = true;
+
                     }
+
                     return check;
                 }
 
