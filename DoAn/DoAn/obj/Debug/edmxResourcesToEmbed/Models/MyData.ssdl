@@ -157,6 +157,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="sp_BaoCaoDoanhThuNam" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="YEAR" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_BaoCaoSPTheoNamThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="YEAR" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_BaoCaoTheoNam" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="YEAR" Type="int" Mode="In" />
   </Function>

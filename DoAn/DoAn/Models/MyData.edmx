@@ -165,13 +165,8 @@
         <Function Name="sp_BaoCaoDoanhThuNam" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="YEAR" Type="int" Mode="In" />
         </Function>
-        <Function Name="sp_BaoCaoDoanhThuNamThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="YEAR" Type="int" Mode="In" />
-          <Parameter Name="MONTH" Type="int" Mode="In" />
-        </Function>
         <Function Name="sp_BaoCaoSPTheoNamThang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="YEAR" Type="int" Mode="In" />
-          <Parameter Name="MONTH" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_BaoCaoTheoNam" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="YEAR" Type="int" Mode="In" />
@@ -214,59 +209,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RiceStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="RiceStoreEntities" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="sp_BaoCaoTheoNam" ReturnType="Collection(RiceStoreModel.sp_BaoCaoTheoNam_Result)">
-          <Parameter Name="YEAR" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="ChiTietDonHangs" EntityType="RiceStoreModel.ChiTietDonHang" />
-          <EntitySet Name="DanhMucs" EntityType="RiceStoreModel.DanhMuc" />
-          <EntitySet Name="DonHangs" EntityType="RiceStoreModel.DonHang" />
-          <EntitySet Name="FeedBacks" EntityType="RiceStoreModel.FeedBack" />
-          <EntitySet Name="KhachHangs" EntityType="RiceStoreModel.KhachHang" />
-          <EntitySet Name="NhanViens" EntityType="RiceStoreModel.NhanVien" />
-          <EntitySet Name="PhanQuyens" EntityType="RiceStoreModel.PhanQuyen" />
-          <EntitySet Name="SanPhams" EntityType="RiceStoreModel.SanPham" />
-          <AssociationSet Name="FK_ChiTietDonHang_DonHang" Association="RiceStoreModel.FK_ChiTietDonHang_DonHang">
-            <End Role="DonHang" EntitySet="DonHangs" />
-            <End Role="ChiTietDonHang" EntitySet="ChiTietDonHangs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChiTietDonHang_SanPham" Association="RiceStoreModel.FK_ChiTietDonHang_SanPham">
-            <End Role="SanPham" EntitySet="SanPhams" />
-            <End Role="ChiTietDonHang" EntitySet="ChiTietDonHangs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SanPham_DanhMuc" Association="RiceStoreModel.FK_SanPham_DanhMuc">
-            <End Role="DanhMuc" EntitySet="DanhMucs" />
-            <End Role="SanPham" EntitySet="SanPhams" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DonHang_KhachHang" Association="RiceStoreModel.FK_DonHang_KhachHang">
-            <End Role="KhachHang" EntitySet="KhachHangs" />
-            <End Role="DonHang" EntitySet="DonHangs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_KhachHang_PhanQuyen" Association="RiceStoreModel.FK_KhachHang_PhanQuyen">
-            <End Role="PhanQuyen" EntitySet="PhanQuyens" />
-            <End Role="KhachHang" EntitySet="KhachHangs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NhanVien_PhanQuyen" Association="RiceStoreModel.FK_NhanVien_PhanQuyen">
-            <End Role="PhanQuyen" EntitySet="PhanQuyens" />
-            <End Role="NhanVien" EntitySet="NhanViens" />
-          </AssociationSet>
-          <FunctionImport Name="sp_BaoCaoDoanhThuNam" ReturnType="Collection(RiceStoreModel.sp_BaoCaoDoanhThuNam_Result)">
-            <Parameter Name="YEAR" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_BaoCaoDoanhThuNamThang" ReturnType="Collection(RiceStoreModel.sp_BaoCaoDoanhThuNamThang_Result)">
-            <Parameter Name="YEAR" Mode="In" Type="Int32" />
-            <Parameter Name="MONTH" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_BaoCaoSPTheoNamThang" ReturnType="Collection(RiceStoreModel.sp_BaoCaoSPTheoNamThang_Result)">
-            <Parameter Name="YEAR" Mode="In" Type="Int32" />
-            <Parameter Name="MONTH" Mode="In" Type="Int32" />
-          </FunctionImport>
-        </EntityContainer>
-        <ComplexType Name="sp_BaoCaoTheoNam_Result">
-          <Property Type="Int32" Name="years" Nullable="true" />
-          <Property Type="String" Name="title" Nullable="true" MaxLength="250" />
-          <Property Type="Int32" Name="total" Nullable="true" />
-        </ComplexType>
         <EntityType Name="ChiTietDonHang">
           <Key>
             <PropertyRef Name="id" />
@@ -276,8 +218,8 @@
           <Property Name="product_id" Type="Int32" />
           <Property Name="num" Type="Int32" />
           <Property Name="total_money" Type="Int32" />
-          <NavigationProperty Name="DonHang" Relationship="RiceStoreModel.FK_ChiTietDonHang_DonHang" FromRole="ChiTietDonHang" ToRole="DonHang" />
-          <NavigationProperty Name="SanPham" Relationship="RiceStoreModel.FK_ChiTietDonHang_SanPham" FromRole="ChiTietDonHang" ToRole="SanPham" />
+          <NavigationProperty Name="DonHang" Relationship="Self.FK_ChiTietDonHang_DonHang" FromRole="ChiTietDonHang" ToRole="DonHang" />
+          <NavigationProperty Name="SanPham" Relationship="Self.FK_ChiTietDonHang_SanPham" FromRole="ChiTietDonHang" ToRole="SanPham" />
         </EntityType>
         <EntityType Name="DanhMuc">
           <Key>
@@ -285,7 +227,7 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SanPhams" Relationship="RiceStoreModel.FK_SanPham_DanhMuc" FromRole="DanhMuc" ToRole="SanPham" />
+          <NavigationProperty Name="SanPhams" Relationship="Self.FK_SanPham_DanhMuc" FromRole="DanhMuc" ToRole="SanPham" />
         </EntityType>
         <EntityType Name="DonHang">
           <Key>
@@ -301,8 +243,8 @@
           <Property Name="order_date" Type="DateTime" Precision="3" />
           <Property Name="status" Type="Int32" />
           <Property Name="total_money" Type="Int32" />
-          <NavigationProperty Name="ChiTietDonHangs" Relationship="RiceStoreModel.FK_ChiTietDonHang_DonHang" FromRole="DonHang" ToRole="ChiTietDonHang" />
-          <NavigationProperty Name="KhachHang" Relationship="RiceStoreModel.FK_DonHang_KhachHang" FromRole="DonHang" ToRole="KhachHang" />
+          <NavigationProperty Name="ChiTietDonHangs" Relationship="Self.FK_ChiTietDonHang_DonHang" FromRole="DonHang" ToRole="ChiTietDonHang" />
+          <NavigationProperty Name="KhachHang" Relationship="Self.FK_DonHang_KhachHang" FromRole="DonHang" ToRole="KhachHang" />
         </EntityType>
         <EntityType Name="FeedBack">
           <Key>
@@ -325,8 +267,8 @@
           <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="role_id" Type="Int32" />
-          <NavigationProperty Name="DonHangs" Relationship="RiceStoreModel.FK_DonHang_KhachHang" FromRole="KhachHang" ToRole="DonHang" />
-          <NavigationProperty Name="PhanQuyen" Relationship="RiceStoreModel.FK_KhachHang_PhanQuyen" FromRole="KhachHang" ToRole="PhanQuyen" />
+          <NavigationProperty Name="DonHangs" Relationship="Self.FK_DonHang_KhachHang" FromRole="KhachHang" ToRole="DonHang" />
+          <NavigationProperty Name="PhanQuyen" Relationship="Self.FK_KhachHang_PhanQuyen" FromRole="KhachHang" ToRole="PhanQuyen" />
         </EntityType>
         <EntityType Name="NhanVien">
           <Key>
@@ -339,7 +281,7 @@
           <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="role_id" Type="Int32" />
-          <NavigationProperty Name="PhanQuyen" Relationship="RiceStoreModel.FK_NhanVien_PhanQuyen" FromRole="NhanVien" ToRole="PhanQuyen" />
+          <NavigationProperty Name="PhanQuyen" Relationship="Self.FK_NhanVien_PhanQuyen" FromRole="NhanVien" ToRole="PhanQuyen" />
         </EntityType>
         <EntityType Name="PhanQuyen">
           <Key>
@@ -347,8 +289,8 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="KhachHangs" Relationship="RiceStoreModel.FK_KhachHang_PhanQuyen" FromRole="PhanQuyen" ToRole="KhachHang" />
-          <NavigationProperty Name="NhanViens" Relationship="RiceStoreModel.FK_NhanVien_PhanQuyen" FromRole="PhanQuyen" ToRole="NhanVien" />
+          <NavigationProperty Name="KhachHangs" Relationship="Self.FK_KhachHang_PhanQuyen" FromRole="PhanQuyen" ToRole="KhachHang" />
+          <NavigationProperty Name="NhanViens" Relationship="Self.FK_NhanVien_PhanQuyen" FromRole="PhanQuyen" ToRole="NhanVien" />
         </EntityType>
         <EntityType Name="SanPham">
           <Key>
@@ -361,12 +303,12 @@
           <Property Name="thumbnail" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="quantity" Type="Int32" />
           <Property Name="description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ChiTietDonHangs" Relationship="RiceStoreModel.FK_ChiTietDonHang_SanPham" FromRole="SanPham" ToRole="ChiTietDonHang" />
-          <NavigationProperty Name="DanhMuc" Relationship="RiceStoreModel.FK_SanPham_DanhMuc" FromRole="SanPham" ToRole="DanhMuc" />
+          <NavigationProperty Name="ChiTietDonHangs" Relationship="Self.FK_ChiTietDonHang_SanPham" FromRole="SanPham" ToRole="ChiTietDonHang" />
+          <NavigationProperty Name="DanhMuc" Relationship="Self.FK_SanPham_DanhMuc" FromRole="SanPham" ToRole="DanhMuc" />
         </EntityType>
         <Association Name="FK_ChiTietDonHang_DonHang">
-          <End Type="RiceStoreModel.DonHang" Role="DonHang" Multiplicity="0..1" />
-          <End Type="RiceStoreModel.ChiTietDonHang" Role="ChiTietDonHang" Multiplicity="*" />
+          <End Role="DonHang" Type="Self.DonHang" Multiplicity="0..1" />
+          <End Role="ChiTietDonHang" Type="Self.ChiTietDonHang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DonHang">
               <PropertyRef Name="id" />
@@ -377,8 +319,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ChiTietDonHang_SanPham">
-          <End Type="RiceStoreModel.SanPham" Role="SanPham" Multiplicity="0..1" />
-          <End Type="RiceStoreModel.ChiTietDonHang" Role="ChiTietDonHang" Multiplicity="*" />
+          <End Role="SanPham" Type="Self.SanPham" Multiplicity="0..1" />
+          <End Role="ChiTietDonHang" Type="Self.ChiTietDonHang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SanPham">
               <PropertyRef Name="id" />
@@ -389,8 +331,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SanPham_DanhMuc">
-          <End Type="RiceStoreModel.DanhMuc" Role="DanhMuc" Multiplicity="0..1" />
-          <End Type="RiceStoreModel.SanPham" Role="SanPham" Multiplicity="*" />
+          <End Role="DanhMuc" Type="Self.DanhMuc" Multiplicity="0..1" />
+          <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DanhMuc">
               <PropertyRef Name="id" />
@@ -401,8 +343,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DonHang_KhachHang">
-          <End Type="RiceStoreModel.KhachHang" Role="KhachHang" Multiplicity="0..1" />
-          <End Type="RiceStoreModel.DonHang" Role="DonHang" Multiplicity="*" />
+          <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="0..1" />
+          <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="KhachHang">
               <PropertyRef Name="id" />
@@ -413,8 +355,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_KhachHang_PhanQuyen">
-          <End Type="RiceStoreModel.PhanQuyen" Role="PhanQuyen" Multiplicity="0..1" />
-          <End Type="RiceStoreModel.KhachHang" Role="KhachHang" Multiplicity="*" />
+          <End Role="PhanQuyen" Type="Self.PhanQuyen" Multiplicity="0..1" />
+          <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PhanQuyen">
               <PropertyRef Name="id" />
@@ -425,8 +367,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NhanVien_PhanQuyen">
-          <End Type="RiceStoreModel.PhanQuyen" Role="PhanQuyen" Multiplicity="0..1" />
-          <End Type="RiceStoreModel.NhanVien" Role="NhanVien" Multiplicity="*" />
+          <End Role="PhanQuyen" Type="Self.PhanQuyen" Multiplicity="0..1" />
+          <End Role="NhanVien" Type="Self.NhanVien" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PhanQuyen">
               <PropertyRef Name="id" />
@@ -436,18 +378,60 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="RiceStoreEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ChiTietDonHangs" EntityType="Self.ChiTietDonHang" />
+          <EntitySet Name="DanhMucs" EntityType="Self.DanhMuc" />
+          <EntitySet Name="DonHangs" EntityType="Self.DonHang" />
+          <EntitySet Name="FeedBacks" EntityType="Self.FeedBack" />
+          <EntitySet Name="KhachHangs" EntityType="Self.KhachHang" />
+          <EntitySet Name="NhanViens" EntityType="Self.NhanVien" />
+          <EntitySet Name="PhanQuyens" EntityType="Self.PhanQuyen" />
+          <EntitySet Name="SanPhams" EntityType="Self.SanPham" />
+          <AssociationSet Name="FK_ChiTietDonHang_DonHang" Association="Self.FK_ChiTietDonHang_DonHang">
+            <End Role="DonHang" EntitySet="DonHangs" />
+            <End Role="ChiTietDonHang" EntitySet="ChiTietDonHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChiTietDonHang_SanPham" Association="Self.FK_ChiTietDonHang_SanPham">
+            <End Role="SanPham" EntitySet="SanPhams" />
+            <End Role="ChiTietDonHang" EntitySet="ChiTietDonHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SanPham_DanhMuc" Association="Self.FK_SanPham_DanhMuc">
+            <End Role="DanhMuc" EntitySet="DanhMucs" />
+            <End Role="SanPham" EntitySet="SanPhams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DonHang_KhachHang" Association="Self.FK_DonHang_KhachHang">
+            <End Role="KhachHang" EntitySet="KhachHangs" />
+            <End Role="DonHang" EntitySet="DonHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KhachHang_PhanQuyen" Association="Self.FK_KhachHang_PhanQuyen">
+            <End Role="PhanQuyen" EntitySet="PhanQuyens" />
+            <End Role="KhachHang" EntitySet="KhachHangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NhanVien_PhanQuyen" Association="Self.FK_NhanVien_PhanQuyen">
+            <End Role="PhanQuyen" EntitySet="PhanQuyens" />
+            <End Role="NhanVien" EntitySet="NhanViens" />
+          </AssociationSet>
+          <FunctionImport Name="sp_BaoCaoDoanhThuNam" ReturnType="Collection(RiceStoreModel.sp_BaoCaoDoanhThuNam_Result)">
+          <Parameter Name="YEAR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_BaoCaoTheoNam" ReturnType="Collection(RiceStoreModel.sp_BaoCaoTheoNam_Result)">
+          <Parameter Name="YEAR" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_BaoCaoSPTheoNamThang" ReturnType="Collection(RiceStoreModel.sp_BaoCaoSPTheoNamThang_Result)">
+            <Parameter Name="YEAR" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
         <ComplexType Name="sp_BaoCaoDoanhThuNam_Result">
-          <Property Type="Int32" Name="years" Nullable="true" />
+          <Property Type="Int32" Name="months" Nullable="true" />
           <Property Type="Int32" Name="total" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_BaoCaoDoanhThuNamThang_Result">
+        <ComplexType Name="sp_BaoCaoTheoNam_Result">
           <Property Type="Int32" Name="years" Nullable="true" />
-          <Property Type="Int32" Name="Column1" Nullable="true" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="250" />
           <Property Type="Int32" Name="total" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_BaoCaoSPTheoNamThang_Result">
-          <Property Type="Int32" Name="years" Nullable="true" />
-          <Property Type="Int32" Name="months" Nullable="true" />
+          <Property Type="Int32" Name="month" Nullable="true" />
           <Property Type="String" Name="title" Nullable="true" MaxLength="250" />
           <Property Type="Int32" Name="total" Nullable="true" />
         </ComplexType>
@@ -456,7 +440,108 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="RiceStoreModelStoreContainer" CdmEntityContainer="RiceStoreEntities">
+        <EntityContainerMapping StorageEntityContainer="RiceStoreModelStoreContainer" CdmEntityContainer="RiceStoreEntities1">
+          <EntitySetMapping Name="ChiTietDonHangs">
+            <EntityTypeMapping TypeName="RiceStoreModel.ChiTietDonHang">
+              <MappingFragment StoreEntitySet="ChiTietDonHang">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="total_money" ColumnName="total_money" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DanhMucs">
+            <EntityTypeMapping TypeName="RiceStoreModel.DanhMuc">
+              <MappingFragment StoreEntitySet="DanhMuc">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DonHangs">
+            <EntityTypeMapping TypeName="RiceStoreModel.DonHang">
+              <MappingFragment StoreEntitySet="DonHang">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="KH_id" ColumnName="KH_id" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="total_money" ColumnName="total_money" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeedBacks">
+            <EntityTypeMapping TypeName="RiceStoreModel.FeedBack">
+              <MappingFragment StoreEntitySet="FeedBack">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="note" ColumnName="note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KhachHangs">
+            <EntityTypeMapping TypeName="RiceStoreModel.KhachHang">
+              <MappingFragment StoreEntitySet="KhachHang">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NhanViens">
+            <EntityTypeMapping TypeName="RiceStoreModel.NhanVien">
+              <MappingFragment StoreEntitySet="NhanVien">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhanQuyens">
+            <EntityTypeMapping TypeName="RiceStoreModel.PhanQuyen">
+              <MappingFragment StoreEntitySet="PhanQuyen">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SanPhams">
+            <EntityTypeMapping TypeName="RiceStoreModel.SanPham">
+              <MappingFragment StoreEntitySet="SanPham">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="DM_id" ColumnName="DM_id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="thumbnail" ColumnName="thumbnail" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_BaoCaoDoanhThuNam" FunctionName="RiceStoreModel.Store.sp_BaoCaoDoanhThuNam">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="RiceStoreModel.sp_BaoCaoDoanhThuNam_Result">
+                <ScalarProperty Name="months" ColumnName="months" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_BaoCaoTheoNam" FunctionName="RiceStoreModel.Store.sp_BaoCaoTheoNam">
             <ResultMapping>
               <ComplexTypeMapping TypeName="RiceStoreModel.sp_BaoCaoTheoNam_Result">
@@ -466,121 +551,10 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="ChiTietDonHangs">
-            <EntityTypeMapping TypeName="RiceStoreModel.ChiTietDonHang">
-              <MappingFragment StoreEntitySet="ChiTietDonHang">
-                <ScalarProperty Name="total_money" ColumnName="total_money" />
-                <ScalarProperty Name="num" ColumnName="num" />
-                <ScalarProperty Name="product_id" ColumnName="product_id" />
-                <ScalarProperty Name="order_id" ColumnName="order_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DanhMucs">
-            <EntityTypeMapping TypeName="RiceStoreModel.DanhMuc">
-              <MappingFragment StoreEntitySet="DanhMuc">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DonHangs">
-            <EntityTypeMapping TypeName="RiceStoreModel.DonHang">
-              <MappingFragment StoreEntitySet="DonHang">
-                <ScalarProperty Name="total_money" ColumnName="total_money" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="order_date" ColumnName="order_date" />
-                <ScalarProperty Name="note" ColumnName="note" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="fullname" ColumnName="fullname" />
-                <ScalarProperty Name="KH_id" ColumnName="KH_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FeedBacks">
-            <EntityTypeMapping TypeName="RiceStoreModel.FeedBack">
-              <MappingFragment StoreEntitySet="FeedBack">
-                <ScalarProperty Name="note" ColumnName="note" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-                <ScalarProperty Name="fullname" ColumnName="fullname" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="KhachHangs">
-            <EntityTypeMapping TypeName="RiceStoreModel.KhachHang">
-              <MappingFragment StoreEntitySet="KhachHang">
-                <ScalarProperty Name="role_id" ColumnName="role_id" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="fullname" ColumnName="fullname" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NhanViens">
-            <EntityTypeMapping TypeName="RiceStoreModel.NhanVien">
-              <MappingFragment StoreEntitySet="NhanVien">
-                <ScalarProperty Name="role_id" ColumnName="role_id" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="fullname" ColumnName="fullname" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PhanQuyens">
-            <EntityTypeMapping TypeName="RiceStoreModel.PhanQuyen">
-              <MappingFragment StoreEntitySet="PhanQuyen">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SanPhams">
-            <EntityTypeMapping TypeName="RiceStoreModel.SanPham">
-              <MappingFragment StoreEntitySet="SanPham">
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
-                <ScalarProperty Name="thumbnail" ColumnName="thumbnail" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="DM_id" ColumnName="DM_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_BaoCaoDoanhThuNam" FunctionName="RiceStoreModel.Store.sp_BaoCaoDoanhThuNam">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="RiceStoreModel.sp_BaoCaoDoanhThuNam_Result">
-                <ScalarProperty Name="years" ColumnName="years" />
-                <ScalarProperty Name="total" ColumnName="total" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_BaoCaoDoanhThuNamThang" FunctionName="RiceStoreModel.Store.sp_BaoCaoDoanhThuNamThang">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="RiceStoreModel.sp_BaoCaoDoanhThuNamThang_Result">
-                <ScalarProperty Name="years" ColumnName="years" />
-                <ScalarProperty Name="Column1" ColumnName="Column1" />
-                <ScalarProperty Name="total" ColumnName="total" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_BaoCaoSPTheoNamThang" FunctionName="RiceStoreModel.Store.sp_BaoCaoSPTheoNamThang">
             <ResultMapping>
               <ComplexTypeMapping TypeName="RiceStoreModel.sp_BaoCaoSPTheoNamThang_Result">
-                <ScalarProperty Name="years" ColumnName="years" />
-                <ScalarProperty Name="months" ColumnName="months" />
+                <ScalarProperty Name="month" ColumnName="month" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="total" ColumnName="total" />
               </ComplexTypeMapping>

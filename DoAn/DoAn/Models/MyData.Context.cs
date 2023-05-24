@@ -18,7 +18,7 @@ namespace DoAn.Models
     public partial class RiceStoreEntities : DbContext
     {
         public RiceStoreEntities()
-            : base("name=RiceStoreEntities")
+            : base("name=RiceStoreEntities1")
         {
         }
     
@@ -36,15 +36,6 @@ namespace DoAn.Models
         public virtual DbSet<PhanQuyen> PhanQuyens { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
     
-        public virtual ObjectResult<sp_BaoCaoTheoNam_Result> sp_BaoCaoTheoNam(Nullable<int> yEAR)
-        {
-            var yEARParameter = yEAR.HasValue ?
-                new ObjectParameter("YEAR", yEAR) :
-                new ObjectParameter("YEAR", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BaoCaoTheoNam_Result>("sp_BaoCaoTheoNam", yEARParameter);
-        }
-    
         public virtual ObjectResult<sp_BaoCaoDoanhThuNam_Result> sp_BaoCaoDoanhThuNam(Nullable<int> yEAR)
         {
             var yEARParameter = yEAR.HasValue ?
@@ -54,30 +45,22 @@ namespace DoAn.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BaoCaoDoanhThuNam_Result>("sp_BaoCaoDoanhThuNam", yEARParameter);
         }
     
-        public virtual ObjectResult<sp_BaoCaoDoanhThuNamThang_Result> sp_BaoCaoDoanhThuNamThang(Nullable<int> yEAR, Nullable<int> mONTH)
+        public virtual ObjectResult<sp_BaoCaoTheoNam_Result> sp_BaoCaoTheoNam(Nullable<int> yEAR)
         {
             var yEARParameter = yEAR.HasValue ?
                 new ObjectParameter("YEAR", yEAR) :
                 new ObjectParameter("YEAR", typeof(int));
     
-            var mONTHParameter = mONTH.HasValue ?
-                new ObjectParameter("MONTH", mONTH) :
-                new ObjectParameter("MONTH", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BaoCaoDoanhThuNamThang_Result>("sp_BaoCaoDoanhThuNamThang", yEARParameter, mONTHParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BaoCaoTheoNam_Result>("sp_BaoCaoTheoNam", yEARParameter);
         }
     
-        public virtual ObjectResult<sp_BaoCaoSPTheoNamThang_Result> sp_BaoCaoSPTheoNamThang(Nullable<int> yEAR, Nullable<int> mONTH)
+        public virtual ObjectResult<sp_BaoCaoSPTheoNamThang_Result> sp_BaoCaoSPTheoNamThang(Nullable<int> yEAR)
         {
             var yEARParameter = yEAR.HasValue ?
                 new ObjectParameter("YEAR", yEAR) :
                 new ObjectParameter("YEAR", typeof(int));
     
-            var mONTHParameter = mONTH.HasValue ?
-                new ObjectParameter("MONTH", mONTH) :
-                new ObjectParameter("MONTH", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BaoCaoSPTheoNamThang_Result>("sp_BaoCaoSPTheoNamThang", yEARParameter, mONTHParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_BaoCaoSPTheoNamThang_Result>("sp_BaoCaoSPTheoNamThang", yEARParameter);
         }
     }
 }

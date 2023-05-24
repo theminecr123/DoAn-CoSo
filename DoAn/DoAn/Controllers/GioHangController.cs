@@ -167,7 +167,7 @@ namespace DoAn.Controllers
 
             dh.KH_id = kh.id;
             dh.order_date = DateTime.Now;
-            dh.status = 0;
+            dh.status = 1;
             dh.email = kh.email;
             dh.fullname = kh.fullname;
             dh.phone_number = kh.phone_number;

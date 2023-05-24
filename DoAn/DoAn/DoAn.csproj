@@ -264,9 +264,6 @@
     <Compile Include="Models\SanPham.cs">
       <DependentUpon>MyData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_BaoCaoDoanhThuNamThang_Result.cs">
-      <DependentUpon>MyData.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\sp_BaoCaoDoanhThuNam_Result.cs">
       <DependentUpon>MyData.tt</DependentUpon>
     </Compile>
@@ -338,19 +335,6 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="images\about.png" />
-    <Content Include="images\blog1.jpg" />
-    <Content Include="images\blog2.jpg" />
-    <Content Include="images\coff.png" />
-    <Content Include="images\coff_img.png" />
-    <Content Include="images\footer_af.png" />
-    <Content Include="images\footer_be.png" />
-    <Content Include="images\loading.gif" />
-    <Content Include="images\menu_icon.png" />
-    <Content Include="images\ser_img1.png" />
-    <Content Include="images\ser_img2.png" />
-    <Content Include="images\ser_img3.png" />
-    <Content Include="images\test_pro.jpg" />
     <Content Include="js\bootstrap.bundle.js" />
     <Content Include="js\bootstrap.bundle.min.js" />
     <Content Include="js\bootstrap.min.js" />
@@ -388,8 +372,8 @@
     <Content Include="js\slider-setting.js" />
     <Content Include="Models\MyData.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MyData.Context.cs</LastGenOutput>
       <DependentUpon>MyData.edmx</DependentUpon>
+      <LastGenOutput>MyData.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\MyData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -427,7 +411,6 @@
     <Content Include="fonts\Poppins-SemiBoldItalic.ttf" />
     <Content Include="fonts\Poppins-Thin.ttf" />
     <Content Include="fonts\Poppins-ThinItalic.ttf" />
-    <Content Include="images\.DS_Store" />
     <Content Include="js\.DS_Store" />
     <Content Include="js\revolution\.DS_Store" />
     <Content Include="js\revolution\fonts\pe-icon-7-stroke\fonts\Pe-icon-7-strokebb1d.eot" />
@@ -491,10 +474,11 @@
     <Content Include="Views\GioHang\PaymentConfirm.cshtml" />
     <Content Include="Views\NhanVien\changePassword.cshtml" />
     <Content Include="Views\NhanVien\Info.cshtml" />
+    <Content Include="Views\NhanVien\DoanhThuNam.cshtml" />
+    <Content Include="Views\NhanVien\DoanhThuSPThang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="icon\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

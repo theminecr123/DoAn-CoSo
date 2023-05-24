@@ -138,7 +138,7 @@
                 e.preventDefault();
                 var id = $(this).data('id');
                 if (parseInt(id) > 0) {
-                    var conf = confirm('Ban co chac muon xoa ban ghi nay?');
+                    var conf = confirm('Xóa đơn hàng này?');
                     if (conf)
                         DeleteRecord(id);
                 }
@@ -152,8 +152,16 @@
                     success: function (res) {
                         if (res.TotalItems > 0) {
                             var items = res.Data;
+                            
                             var html = "";
                             for (let i = 0; i < res.TotalItems; i++) {
+                                var dateString = items[i].order_date;
+                                var timestamp = parseInt(dateString.match(/\d+/)[0]);
+                                var dateTime = new Date(timestamp);
+                                var day = dateTime.getDate().toString().padStart(2, '0');
+                                var month = (dateTime.getMonth() + 1).toString().padStart(2, '0');
+                                var year = dateTime.getFullYear().toString();
+                                var formattedDate = day + "/" + month + "/" + year;
                                 html += "<tr>";
                                 html += "<tr id='trow_" + items[i].id + "'>";
                                 html += "<td>" + (i + 1) + "</td>";
@@ -163,6 +171,8 @@
                                 html += "<td>" + items[i].phone_number + "</td>";
                                 html += "<td>" + items[i].address + "</td>";
                                 html += "<td>" + items[i].note + "</td>";
+                                html += "<td>" + formattedDate + "</td>";
+
                                 switch (items[i].status) {
                                     case 1:
                                         html += "<td>" + 'Đang chuẩn bị' + "</td>";

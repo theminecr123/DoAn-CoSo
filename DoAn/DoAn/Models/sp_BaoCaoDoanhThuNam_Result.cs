@@ -13,7 +13,7 @@ namespace DoAn.Models
     
     public partial class sp_BaoCaoDoanhThuNam_Result
     {
-        public Nullable<int> years { get; set; }
+        public Nullable<int> months { get; set; }
         public Nullable<int> total { get; set; }
     }
 }

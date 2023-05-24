@@ -104,15 +104,15 @@ namespace DoAn.Controllers
 
         }
 
-        public List<sp_BaoCaoSPTheoNamThang_Result> BaoCaoSanPhamThang(int year, int month)
-        {
-            using (RiceStoreEntities data = new RiceStoreEntities())
-            {
-                var lsData = data.sp_BaoCaoSPTheoNamThang(year,month).ToList();
-                return lsData;
-            }
+        //public List<sp_BaoCaoSPTheoNamThang_Result> BaoCaoSanPhamThang(int year)
+        //{
+        //    using (RiceStoreEntities data = new RiceStoreEntities())
+        //    {
+        //        var lsData = data.sp_BaoCaoSPTheoNamThang(year).ToList();
+        //        return lsData;
+        //    }
 
-        }
+        //}
 
         public List<sp_BaoCaoDoanhThuNam_Result> BaoCaoDoanhThuNam(int year)
         {
@@ -124,15 +124,6 @@ namespace DoAn.Controllers
 
         }
 
-        public List<sp_BaoCaoDoanhThuNamThang_Result> BaoCaoDoanhThuThang(int year,int month)
-        {
-            using (RiceStoreEntities data = new RiceStoreEntities())
-            {
-                var lsData = data.sp_BaoCaoDoanhThuNamThang(year,month).ToList();
-                return lsData;
-            }
-
-        }
 
         [HttpGet]
         [UserAuthorize]
@@ -147,7 +138,29 @@ namespace DoAn.Controllers
             var LsData = BaoCaoSanPhamNam(year);
             return Json(LsData, JsonRequestBehavior.AllowGet);
         }
-       
+        //[HttpGet]
+        //public ActionResult DoanhThuSPThang()
+        //{
+        //    return View();
+        //}
+        //public ActionResult BaoCaoSPThang(int year)
+        //{
+        //    var LsData = BaoCaoSanPhamThang(year);
+        //    return Json(LsData, JsonRequestBehavior.AllowGet);
+        //}
+        [HttpGet]
+        public ActionResult DoanhThuNam()
+        {
+            return View();
+        }
+
+        public ActionResult BaoCaoDTNam(int year)
+        {
+            var LsData = BaoCaoDoanhThuNam(year);
+            return Json(LsData, JsonRequestBehavior.AllowGet);
+        }
+        //-------------------------------------------------------------------------------------------
+
         public string ProcessUploadGao(HttpPostedFileBase file)
         {
             if (file == null)
@@ -250,10 +263,12 @@ namespace DoAn.Controllers
             if (searchName == null)
             {
                 orders = data.DonHangs.Where(x => x.fullname.ToLower().Contains(searchName.Trim().ToLower())).ToList();
+                
             }
             else
             {
                 orders = data.DonHangs.ToList();
+                
             }
 
 
@@ -296,7 +311,9 @@ namespace DoAn.Controllers
         [UserAuthorize]
         public JsonResult DeleteDH(int? id)
         {
+            var ordersDetail = data.ChiTietDonHangs.Where(x => x.order_id == id).ToList();
             var orders = data.DonHangs.Find(id);
+            data.ChiTietDonHangs.RemoveRange(ordersDetail);
             data.DonHangs.Remove(orders);
             var rs = data.SaveChanges();
             if (rs > 0)
