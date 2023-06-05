@@ -14,8 +14,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="input-group">
-                <label for="searchBox">Tìm kiếm</label>
-                <input type="search" id="txtSearchBox" placeholder="Tim Kiem...">
+                <input type="search" id="txtSearchBox" placeholder="    Search by Name...">
 
                 <button type="button" class="btn btn-primary" style="margin-left:10px;" id="btbSearch">Tìm kiếm</button>
             </div>
@@ -144,12 +143,26 @@
                         type: 'POST',
                         data: model,
                         success: function (res) {
+                            var myData = '@ViewBag.Email';
                             if (res.success) {
                                 LoadData();
                                 ResetInput();
-                                $('#modalCreate').modal('hide');
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thành Công!',
+                                    showConfirmButton: true
+                                })
 
                             }
+                            else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Email trùng!',
+                                    showConfirmButton: true
+                                })
+                            }
+                            
                         }
                     });
                 }
@@ -163,9 +176,25 @@
                 e.preventDefault();
                 var id = $(this).data('id');
                 if (parseInt(id) > 0) {
-                    var conf = confirm('Bạn có chắc muốn xóa khách hàng này?');
-                    if (conf)
-                        DeleteRecord(id);
+                    Swal.fire({
+                        title: 'Bạn có chắc muốn xóa Khách Hàng này?',
+                        text: "Không thể hoàn tác!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            DeleteRecord(id);
+                            Swal.fire(
+                                'Đã xóa!',
+                                'Khách Hàng này đã được xóa!',
+                                'success'
+                            )
+                        }
+                    })
+
                 }
             });
 
@@ -186,7 +215,7 @@
                                 html += "<td>" + items[i].email + "</td>";
                                 html += "<td>" + items[i].phone_number + "</td>";
                                 html += "<td>" + items[i].address + "</td>";
-                                html += "<td><a data-id='" + items[i].id + "' href='#' class='btn btn-warning btnEdit'>Sửa</a> | <a href='#' data-id='" + items[i].id + "' class='btn btn-danger btnDelete'>Xóa</a></td>";
+                                html += "<td><a href='#' data-id='" + items[i].id + "' class='btn btn-danger btnDelete'>Xóa</a></td>";
                                 html += "</tr>";
                             }
                             $('#show_data').html(html);
@@ -262,7 +291,8 @@
                 } else if (!emailPattern.test(email)) {
                     $('#email').next().html('Email không hợp lệ!');
                     check = false;
-                } else {
+                }               
+                else {
                     $('#email').next().html('');
 
                 }

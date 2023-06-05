@@ -4,7 +4,6 @@
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <body class="main-layout inner_page">
 
 
@@ -24,12 +23,17 @@
             }
             <div class="product-img">
                 <img src="@Model.thumbnail" height="420" width="327">
+                Số lượng
+                <div class="input-group">
+                    <input type="number" id="ipQuantity" class="form-control" value="1">
+                </div>
                 <div class="product-price-btn">
                     <p>Giá: <span>@String.Format("{0:0,0}", @Model.price)</span>VNĐ</p>
-                    @using (Html.BeginForm("addCart", "GioHang", new { @id = @Model.id, @strURL = Request.Url.ToString() }))
-                    {
-                        <button type="submit" onclick="showAlert()" class="btn-price-btn"><span>Order</span></button>
-                    }
+
+                    <button type="submit" id="addtocart" class="btn-price-btn">
+                        <span>Add</span>
+                    </button>
+
                 </div>
             </div>
             <div class="product-info">
@@ -43,11 +47,39 @@
         </div>
 
     </div>
-<script>
-    function showAlert() {
-    alert("Đã thêm vào giỏ");
+    @section scripts{
+
+        <script type="text/javascript">
+    $(function () {
+        $("#addtocart").click(function () {
+            var model = {};
+            //lấy id sản phẩm
+            model.id = @Model.id;
+            // lấy số lượng đặt hàng
+            model.quantity = $("#ipQuantity").val();
+            model.price = @Model.price;
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("AddToCart", "GioHang")',
+                data:  JSON.stringify(model) ,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    Swal.fire({
+                        title: 'Thành Công!',
+                    })
+                    $('#CartCount').text(@Session["count"] + 1);
+                },
+                error: function () {
+                    alert("Lỗi trong khi thêm vào giỏ hàng!");
+                }
+            });
+            return false;
+        });
+    });
+        </script>
     }
-</script>
 
     <style>
         body {

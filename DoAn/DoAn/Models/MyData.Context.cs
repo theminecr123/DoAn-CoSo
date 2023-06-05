@@ -35,6 +35,8 @@ namespace DoAn.Models
         public virtual DbSet<NhanVien> NhanViens { get; set; }
         public virtual DbSet<PhanQuyen> PhanQuyens { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
+        public virtual DbSet<ChiTietPhieuNhap> ChiTietPhieuNhaps { get; set; }
+        public virtual DbSet<PhieuNhap> PhieuNhaps { get; set; }
     
         public virtual ObjectResult<sp_BaoCaoDoanhThuNam_Result> sp_BaoCaoDoanhThuNam(Nullable<int> yEAR)
         {

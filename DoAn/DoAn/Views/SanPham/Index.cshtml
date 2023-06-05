@@ -38,45 +38,48 @@
 
 
     <div class="row">
-      
+
         @foreach (var item in Model)
-            {
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 container">
-                    <div class="panel panel-default">
-                        <div class="panel panel-heading" style="font-size:20px; padding:20px; text-align:center; padding-top:100px">
-                            @item.title
+        {
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 container">
+                <div class="panel panel-default">
+                    <div class="panel panel-heading" style="font-size:20px; text-align:center; padding-top:20px;">
+                        @item.title
 
 
-                            <a href="@Url.Action("Detail", new {id=item.id })">
-                                <img src=@Url.Content(item.thumbnail) class="img-responsive" alt="" />
-                            </a>
+                        <a href="@Url.Action("Detail", new {id=item.id })">
+                            <img src=@Url.Content(item.thumbnail) class="img-responsive" alt="" />
+                        </a>
 
 
-                        </div>
-                        <div class="panel-body">
-
-
-
-                        </div>
-                        <div class="panel-footer clearfix">
-                            <div class="pull-right" style="padding-right:200px">
-                                <p><strong>Giá: </strong>@String.Format("{0:0,0}", @item.price) VNĐ</p>
+                    </div>
+                    <div class="panel-body">
 
 
 
-                                @using (Html.BeginForm("addCart", "GioHang", new { @id = item.id, @strURL = Request.Url.ToString() }))
-                                {
-                                    <button type="submit" onclick="showAlert()" class="btn-order"><span>Order</span></button>
-                                }
+                    </div>
+                    <div class="panel-footer clearfix">
+                        <div class="pull-right" style="padding-right:200px">
+                            <p style="font-size:30px;padding: 20px"><strong>Giá: </strong>@String.Format("{0:0,0}", @item.price) VNĐ</p>
 
 
-                            </div>
+
+
+                            @*@using (Html.BeginForm("addCart", "GioHang", new { @id = item.id, @strURL = Request.Url.ToString() }))
+                            {
+                                <button type="submit" class="btn-order "><span>Order</span></button>
+                            }*@
+
+
                         </div>
                     </div>
                 </div>
-            }
+            </div>
+        }
     </div>
+
 </body>
+
 
 <div>
     <div class="SoTrang">
@@ -87,8 +90,8 @@
         @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }), PagedList.Mvc.PagedListRenderOptions.Minimal)
     </div>
 </div>
-
-
+@section scripts{
+    }
 
 
 <style>

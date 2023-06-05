@@ -12,120 +12,114 @@ namespace DoAn.Controllers
     public class GioHangController : Controller
     {
             RiceStoreEntities data = new RiceStoreEntities();
-            public List<GioHang> getGioHang()
-            {
-                List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
-                if (listGioHang == null)
-                {
-                    listGioHang = new List<GioHang>();
-                    Session["GioHang"] = listGioHang;
-                }
-                return listGioHang;
 
-            }
-
-        public ActionResult addCart(int id, string strURL)
+        public ActionResult GioHang()
         {
-            List<GioHang> listGioHang = getGioHang();
-            GioHang sanpham = listGioHang.Find(n => n.id == id);
-            if (sanpham == null)
+            ViewBag.Tongtien = TongTien();
+            ViewBag.Tongsoluongsanpham = TongSoLuongSanPham();
+            Session["SoLuongSP"] = TongSoLuongSanPham();
+            return View((List<GioHang>)Session["cart"]);
+        }
+
+        public ActionResult AddToCart(int id, int quantity, int price)
+        {
+            if (Session["cart"] == null)
             {
-                sanpham = new GioHang(id);
-                listGioHang.Add(sanpham);
-                return Redirect(strURL);
+                List<GioHang> cart = new List<GioHang>();
+                cart.Add(new GioHang { SanPham = data.SanPhams.Find(id), quantity = quantity, price = price });
+                Session["cart"] = cart;
+                Session["count"] = 1;
             }
             else
             {
-                sanpham.quantity++;
-                return Redirect(strURL);
+                List<GioHang> cart = (List<GioHang>)Session["cart"];
+                //kiểm tra sản phẩm có tồn tại trong giỏ hàng chưa???
+                int index = isExist(id);
+                if (index != -1)
+                {
+                    //nếu sp tồn tại trong giỏ hàng thì cộng thêm số lượng
+                    cart[index].quantity += quantity;
+                }
+                else
+                {
+                    //nếu không tồn tại thì thêm sản phẩm vào giỏ hàng
+                    cart.Add(new GioHang { SanPham = data.SanPhams.Find(id), quantity = quantity, price = price });
+                    //Tính lại số sản phẩm trong giỏ hàng
+                    Session["count"] = Convert.ToInt32(Session["count"]) + 1;
+                }
+                Session["cart"] = cart;
             }
+            
+            return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
         }
 
-
-        private int TongSoLuong()
+        private int isExist(int id)
         {
-            int tsl = 0;
-            List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
-            if (listGioHang != null)
-            {
-                tsl = listGioHang.Sum(n => n.quantity);
-            }
-            return tsl;
+            List<GioHang> cart = (List<GioHang>)Session["cart"];
+            for (int i = 0; i < cart.Count; i++)
+                if (cart[i].SanPham.id.Equals(id))
+                    return i;
+            return -1;
+        }
+        //[HttpPost]
+        //public ActionResult UpdateTotal(int quantity)
+        //{
+        //    // Calculate the new total based on the quantity
+        //    decimal total = TongTien(quantity);
+
+        //    // Return the updated total as JSON
+        //    return Json(new { total = total });
+        //}
+
+        //xóa sản phẩm khỏi giỏ hàng theo id
+        public ActionResult Remove(int id)
+        {
+            List<GioHang> li = (List<GioHang>)Session["cart"];
+                li.RemoveAll(x => x.SanPham.id == id);
+                Session["cart"] = li;
+                Session["count"] = Convert.ToInt32(Session["count"]) - 1;          
+            return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
         }
 
         private int TongSoLuongSanPham()
         {
             int tsl = 0;
-            List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
-            if (listGioHang != null)
+            List<GioHang> li = (List<GioHang>)Session["cart"];
+            if (li != null)
             {
-                tsl = listGioHang.Count;
+                tsl = li.Count;
             }
             return tsl;
         }
         private double TongTien()
         {
             double tt = 0;
-            List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
-            if (listGioHang != null)
+            List<GioHang> li = (List<GioHang>)Session["cart"];
+            if (li != null)
             {
-                tt = listGioHang.Sum(n => n.thanhtien);
+                tt = li.Sum(n => n.thanhtien);
             }
             return tt;
         }
 
-        public ActionResult GioHang()
+
+       
+
+        public ActionResult XoaAllGioHang()
         {
-            List<GioHang> listGioHang = getGioHang();
-            ViewBag.Tongsoluong = TongSoLuong();
-            ViewBag.Tongtien = TongTien();
-            ViewBag.Tongsoluongsanpham = TongSoLuongSanPham();
-            Session["SoLuongSP"] = TongSoLuongSanPham();
-            return View(listGioHang);
+            List<GioHang> li = (List<GioHang>)Session["cart"];
+            li.Clear();
+            return RedirectToAction("GioHang");
         }
+
+
 
         public ActionResult GioHangPartial()
         {
-            ViewBag.Tongsoluong = TongSoLuong();
             ViewBag.Tongtien = TongTien();
             ViewBag.Tongsoluongsanpham = TongSoLuongSanPham();
             return PartialView();
         }
-        public ActionResult XoaGioHang(int id)
-        {          
-            List<GioHang> listGioHang = getGioHang();
-            GioHang sanpham = listGioHang.SingleOrDefault(n => n.id == id);
-            if (sanpham != null)
-            {
-                listGioHang.RemoveAll(n => n.id == id);
-                return RedirectToAction("GioHang");
-            }
-            return RedirectToAction("GioHang");
-        }
-
-       
-        public ActionResult CapNhatGioHang(int id, FormCollection collection)
-        {
-            List<GioHang> listGioHang = getGioHang();
-            
-
-            GioHang sanpham = listGioHang.SingleOrDefault(n => n.id == id);
-
-            if (sanpham != null)
-            {
-                sanpham.quantity = int.Parse(collection["txtSoLg"].ToString());
-            }
-
-            return RedirectToAction("GioHang");
-        }
-
-        public ActionResult XoaAllGioHang()
-        {
-            List<GioHang> listGioHang = getGioHang();
-            listGioHang.Clear();
-            return RedirectToAction("GioHang");
-        }
-
 
         [HttpGet]
         public ActionResult DatHang()
@@ -136,7 +130,7 @@ namespace DoAn.Controllers
                 return RedirectToAction("FlatLogin", "KhachHang");
             }
 
-            if (TongSoLuong() == 0)
+            if (TongSoLuongSanPham() == 0)
             {
 
                 return RedirectToAction("Index", "SanPham");
@@ -148,12 +142,11 @@ namespace DoAn.Controllers
 
             }
 
-            List<GioHang> listGioHang = getGioHang();
-            ViewBag.Tongsoluong = TongSoLuong();
+            List<GioHang> li = (List<GioHang>)Session["cart"];
             ViewBag.Tongtien = TongTien();
             ViewBag.TongSoluongsanpham = TongSoLuongSanPham();
 
-            return View(listGioHang);
+            return View(li);
         }
         [HttpPost]
         public ActionResult DatHang(FormCollection collection)
@@ -162,7 +155,7 @@ namespace DoAn.Controllers
             KhachHang kh = (KhachHang)Session["TaiKhoan"];
             SanPham s = new SanPham();
 
-            List<GioHang> gh = getGioHang();
+            List<GioHang> gh = (List<GioHang>)Session["cart"];
             var ngaygiao = String.Format("{0:MM/dd/yyyy}", collection["NgayGiao"]);
 
             dh.KH_id = kh.id;
@@ -181,10 +174,10 @@ namespace DoAn.Controllers
             {
                 ChiTietDonHang ctdh = new ChiTietDonHang();
                 ctdh.order_id = dh.id;
-                ctdh.product_id = item.id;
+                ctdh.product_id = item.SanPham.id;
                 ctdh.num = item.quantity;
                 ctdh.total_money = (int)item.thanhtien;
-                s = data.SanPhams.Single(n => n.id == item.id);
+                s = data.SanPhams.Single(n => n.id == item.SanPham.id);
                 s.quantity -= ctdh.num;
                 data.SaveChanges();
 
@@ -192,29 +185,29 @@ namespace DoAn.Controllers
             }
 
             string content = System.IO.File.ReadAllText(Server.MapPath("~/Content/common/neworder.html"));
-            content = content.Replace("{{CustomerName}}",kh.fullname);
-            content = content.Replace("{{Phone}}",kh.phone_number);
-            content = content.Replace("{{Email}}",kh.email);
-            content = content.Replace("{{Address}}",kh.address);
-            content = content.Replace("{{OrderID}}",dh.id.ToString());
-            content = content.Replace("{{OrderDate}}",dh.order_date.ToString());
-            content = content.Replace("{{Total}}",TongTien().ToString("#,##0.00")+"VND");
+            content = content.Replace("{{CustomerName}}", kh.fullname);
+            content = content.Replace("{{Phone}}", kh.phone_number);
+            content = content.Replace("{{Email}}", kh.email);
+            content = content.Replace("{{Address}}", kh.address);
+            content = content.Replace("{{OrderID}}", dh.id.ToString());
+            content = content.Replace("{{OrderDate}}", dh.order_date.ToString());
+            content = content.Replace("{{Total}}", TongTien().ToString("#,##0.00") + "VND");
             var toEmail = kh.email;
             //new MailHelper().SendMail(kh.email, "Ricie - Web bán gạo hàng đầu Hutech.", content);
 
             new MailHelper().SendMail(toEmail, "Ricie - Web bán gạo hàng đầu Hutech.", content);
 
             data.SaveChanges();
-            Session["GioHang"] = null;
+            Session["cart"] = null;
             return RedirectToAction("Index", "SanPham");
         }
 
         public ActionResult PaymentVNPay()
         {
 
-            
 
-            
+
+
 
             double a = TongTien();
             double total = a * 100;
@@ -242,7 +235,7 @@ namespace DoAn.Controllers
 
             string paymentUrl = pay.CreateRequestUrl(url, hashSecret);
 
-            
+
             return Redirect(paymentUrl);
         }
 
@@ -280,7 +273,7 @@ namespace DoAn.Controllers
                         KhachHang kh = (KhachHang)Session["TaiKhoan"];
                         SanPham s = new SanPham();
 
-                        List<GioHang> gh = getGioHang();
+                        List<GioHang> gh = (List<GioHang>)Session["cart"];
 
                         dh.KH_id = kh.id;
                         dh.order_date = DateTime.Now;
@@ -299,10 +292,10 @@ namespace DoAn.Controllers
                         {
                             ChiTietDonHang ctdh = new ChiTietDonHang();
                             ctdh.order_id = dh.id;
-                            ctdh.product_id = item.id;
+                            ctdh.product_id = item.SanPham.id;
                             ctdh.num = item.quantity;
                             ctdh.total_money = (int)item.thanhtien;
-                            s = data.SanPhams.Single(n => n.id == item.id);
+                            s = data.SanPhams.Single(n => n.id == item.SanPham.id);
                             s.quantity -= ctdh.num;
                             data.SaveChanges();
 
@@ -321,7 +314,7 @@ namespace DoAn.Controllers
                         new MailHelper().SendMail(toEmail, "Ricie - Web bán gạo hàng đầu Hutech.", content);
 
                         data.SaveChanges();
-                        Session["GioHang"] = null;
+                        Session["cart"] = null;
                     }
                     else
                     {
@@ -338,10 +331,10 @@ namespace DoAn.Controllers
             return View();
         }
 
-        // GET: GioHang
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //    // GET: GioHang
+        //    public ActionResult Index()
+        //    {
+        //        return View();
+        //    }
     }
 }

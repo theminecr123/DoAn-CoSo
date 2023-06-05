@@ -10,6 +10,16 @@
     <Property Name="num" Type="int" />
     <Property Name="total_money" Type="int" />
   </EntityType>
+  <EntityType Name="ChiTietPhieuNhap">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_pn" Type="int" Nullable="false" />
+    <Property Name="product_id" Type="int" />
+    <Property Name="num" Type="int" />
+    <Property Name="price" Type="int" />
+  </EntityType>
   <EntityType Name="DanhMuc">
     <Key>
       <PropertyRef Name="id" />
@@ -73,6 +83,15 @@
     <Property Name="id" Type="int" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="20" />
   </EntityType>
+  <EntityType Name="PhieuNhap">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date_add" Type="date" />
+    <Property Name="total_money" Type="int" />
+    <Property Name="total_quantity" Type="int" />
+  </EntityType>
   <EntityType Name="SanPham">
     <Key>
       <PropertyRef Name="id" />
@@ -105,6 +124,30 @@
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="ChiTietDonHang">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ChiTietPhieuNhap_PhieuNhap">
+    <End Role="PhieuNhap" Type="Self.PhieuNhap" Multiplicity="1" />
+    <End Role="ChiTietPhieuNhap" Type="Self.ChiTietPhieuNhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhieuNhap">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ChiTietPhieuNhap">
+        <PropertyRef Name="id_pn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ChiTietPhieuNhap_SanPham">
+    <End Role="SanPham" Type="Self.SanPham" Multiplicity="0..1" />
+    <End Role="ChiTietPhieuNhap" Type="Self.ChiTietPhieuNhap" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SanPham">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ChiTietPhieuNhap">
         <PropertyRef Name="product_id" />
       </Dependent>
     </ReferentialConstraint>
@@ -168,12 +211,14 @@
   </Function>
   <EntityContainer Name="RiceStoreModelStoreContainer">
     <EntitySet Name="ChiTietDonHang" EntityType="Self.ChiTietDonHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ChiTietPhieuNhap" EntityType="Self.ChiTietPhieuNhap" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DanhMuc" EntityType="Self.DanhMuc" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DonHang" EntityType="Self.DonHang" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="FeedBack" EntityType="Self.FeedBack" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="KhachHang" EntityType="Self.KhachHang" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="NhanVien" EntityType="Self.NhanVien" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PhanQuyen" EntityType="Self.PhanQuyen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PhieuNhap" EntityType="Self.PhieuNhap" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_ChiTietDonHang_DonHang" Association="Self.FK_ChiTietDonHang_DonHang">
       <End Role="DonHang" EntitySet="DonHang" />
@@ -182,6 +227,14 @@
     <AssociationSet Name="FK_ChiTietDonHang_SanPham" Association="Self.FK_ChiTietDonHang_SanPham">
       <End Role="SanPham" EntitySet="SanPham" />
       <End Role="ChiTietDonHang" EntitySet="ChiTietDonHang" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ChiTietPhieuNhap_PhieuNhap" Association="Self.FK_ChiTietPhieuNhap_PhieuNhap">
+      <End Role="PhieuNhap" EntitySet="PhieuNhap" />
+      <End Role="ChiTietPhieuNhap" EntitySet="ChiTietPhieuNhap" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ChiTietPhieuNhap_SanPham" Association="Self.FK_ChiTietPhieuNhap_SanPham">
+      <End Role="SanPham" EntitySet="SanPham" />
+      <End Role="ChiTietPhieuNhap" EntitySet="ChiTietPhieuNhap" />
     </AssociationSet>
     <AssociationSet Name="FK_DonHang_KhachHang" Association="Self.FK_DonHang_KhachHang">
       <End Role="KhachHang" EntitySet="KhachHang" />

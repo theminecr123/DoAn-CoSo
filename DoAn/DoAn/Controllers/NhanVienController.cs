@@ -11,6 +11,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.UI;
 
@@ -104,15 +105,6 @@ namespace DoAn.Controllers
 
         }
 
-        //public List<sp_BaoCaoSPTheoNamThang_Result> BaoCaoSanPhamThang(int year)
-        //{
-        //    using (RiceStoreEntities data = new RiceStoreEntities())
-        //    {
-        //        var lsData = data.sp_BaoCaoSPTheoNamThang(year).ToList();
-        //        return lsData;
-        //    }
-
-        //}
 
         public List<sp_BaoCaoDoanhThuNam_Result> BaoCaoDoanhThuNam(int year)
         {
@@ -138,16 +130,8 @@ namespace DoAn.Controllers
             var LsData = BaoCaoSanPhamNam(year);
             return Json(LsData, JsonRequestBehavior.AllowGet);
         }
-        //[HttpGet]
-        //public ActionResult DoanhThuSPThang()
-        //{
-        //    return View();
-        //}
-        //public ActionResult BaoCaoSPThang(int year)
-        //{
-        //    var LsData = BaoCaoSanPhamThang(year);
-        //    return Json(LsData, JsonRequestBehavior.AllowGet);
-        //}
+
+        [UserAuthorize]
         [HttpGet]
         public ActionResult DoanhThuNam()
         {
@@ -202,7 +186,14 @@ namespace DoAn.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-       
+        public bool CheckUser(string email)
+        {
+            var check = data.KhachHangs.Any(n => n.email == email);
+            if (check == true)
+                return true;
+
+            return false;
+        }
 
         [HttpPost]
         [UserAuthorize]
@@ -211,11 +202,21 @@ namespace DoAn.Controllers
            
                 customers.password = HashPassword(customers.password);
                 data.KhachHangs.Add(customers);
+            
 
             try
             {
-                data.SaveChanges();
-                return Json(new { success = true });
+                if (CheckUser(customers.email))
+                {
+                    return Json(new { success = false });
+
+                }
+                else
+                {
+                    data.SaveChanges();
+                    return Json(new { success = true });
+                }
+               
 
             }
             catch
@@ -293,16 +294,22 @@ namespace DoAn.Controllers
         {
             if (orders.id > 0)
             {
-                data.DonHangs.Attach(orders);
-                data.Entry(orders).State = EntityState.Modified;
-                data.SaveChanges();
-                return Json(new { success = true });
-            }
-            else
-            {
-                return Json(new { success = false });
+                // Fetch the existing record from the database
+                var existingOrder = data.DonHangs.FirstOrDefault(dh => dh.id == orders.id);
 
+                if (existingOrder != null)
+                {
+                    // Update only the "status" field
+                    existingOrder.status = orders.status;
+
+                    // Save the changes
+                    data.SaveChanges();
+
+                    return Json(new { success = true });
+                }
             }
+
+            return Json(new { success = false });
         }
        
 
@@ -363,27 +370,56 @@ namespace DoAn.Controllers
             return Json(new { data = item }, JsonRequestBehavior.AllowGet);
         }
 
+        public bool CheckStaff(string email)
+        {
+            var check = data.NhanViens.Any(n => n.email == email);
+            if (check == true)
+            {
+                return true;
+
+            }
+
+            return false;
+        }
+
         [HttpPost]
         [UserAuthorize(ChucNang = 1)]
         public ActionResult CreateUpdateNV(NhanVien staffs)
-        {
-            if (staffs.id > 0)
-            {
-                data.NhanViens.Attach(staffs);
-                data.Entry(staffs).State = EntityState.Modified;
-                data.SaveChanges();
-                return Json(new { success = true });
-            }
-            else
-            {
-                staffs.password = HashPassword("Aa@123456");
-                data.NhanViens.Add(staffs);
-
-            }
+        {         
             try
             {
-                data.SaveChanges();
-                return Json(new { success = true });
+                if (staffs.id > 0 )
+                {
+                    var existingOrder = data.NhanViens.FirstOrDefault(dh => dh.id == staffs.id);
+
+                    if (existingOrder != null)
+                    {
+                        // Update only the "status" field
+                        existingOrder.fullname = staffs.fullname;
+                        existingOrder.email = staffs.email;
+                        existingOrder.phone_number = staffs.phone_number;
+                        existingOrder.address = staffs.address;
+                        existingOrder.role_id = staffs.role_id;
+
+                        data.SaveChanges();
+                        return Json(new { success = true });
+                    }
+                    return Json(new { success = true });
+                }
+
+                else if(CheckStaff(staffs.email))
+                {
+                    ViewBag.EmailStaff = "Nhân Viên này đã tồn tại trong hệ thống";
+                    return Json(new { success = false });
+                }
+                else
+                {
+                    staffs.password = HashPassword("Aa@123456");
+                    data.NhanViens.Add(staffs);
+                    data.SaveChanges();
+                    return Json(new { success = true });
+                }
+                
 
             }
             catch
@@ -410,7 +446,17 @@ namespace DoAn.Controllers
         [UserAuthorize]
         public ActionResult changePassword(int? id)
         {
-            
+            if (id == null)
+            {
+                return RedirectToAction("FlatLogin", "NhanVien");
+
+            }
+            else if (id != int.Parse(Session["IDNV"].ToString()))
+            {
+                ViewBag.Message = "Bạn không thể truy cập vào thông tin người khác!";
+                return RedirectToAction("Info", "NhanVien", new { id = int.Parse(Session["IDNV"].ToString()) });
+
+            }
             return View();
         }
 
@@ -433,7 +479,7 @@ namespace DoAn.Controllers
             {
                 kh.password = HashPassword(password);
                 data.SaveChanges();
-                return RedirectToAction("Info", "KhachHang", new { id = kh.id });
+                return RedirectToAction("Info", "NhanVien", new { id = kh.id });
 
             }
 
@@ -462,6 +508,18 @@ namespace DoAn.Controllers
         /*end NhanVien*/
 
         /*SanPham*/
+        public bool CheckProduct(string title, string thumbnail)
+        {
+            var check = data.SanPhams.Any(n => n.title.Equals(title) || n.thumbnail.Equals(thumbnail));
+            if (check == true)
+            {
+                return true;
+
+            }
+
+            return false;
+        }
+
         [UserAuthorize]
         public ActionResult SanPham()
         {           
@@ -511,7 +569,17 @@ namespace DoAn.Controllers
                 data.SaveChanges();
                 return Json(new { success = true });
             }
-            data.SanPhams.Add(sp);
+            else if (CheckProduct(sp.title,sp.thumbnail))
+            {
+                return Json(new { success = false });
+
+            }
+            else
+            {
+                
+                data.SanPhams.Add(sp);
+
+            }
             try
             {
                 data.SaveChanges();
@@ -539,10 +607,91 @@ namespace DoAn.Controllers
             }
             return Json(new { Success = false });
         }
-        
+
+        /*PhieuNhap*/
+        /*[UserAuthorize]
+        public ActionResult PhieuNhap()
+        {
+            return View();
+        }
+
+
+        [UserAuthorize]
+        public ActionResult GetPhieuNhap(string searchName)
+        {
+            List<PhieuNhap> products = null;
+
+            data.Configuration.ProxyCreationEnabled = false;
+            if (!string.IsNullOrEmpty(searchName))
+            {
+                products = data.PhieuNhaps.Where(x => x.id.ToString().Contains(searchName.Trim().ToLower())).ToList();
+            }
+            else
+            {
+                products = data.PhieuNhaps.ToList();
+            }
 
 
 
+            return Json(new
+            {
+                Data = products,
+                TotalItems = products.Count
+            }, JsonRequestBehavior.AllowGet);
+        }
 
+        [UserAuthorize]
+        public ActionResult GetByIdPN(int? id)
+        {
+            data.Configuration.ProxyCreationEnabled = false;
+            var item = data.PhieuNhaps.Find(id);
+            return Json(new { data = item }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [UserAuthorize]
+        public ActionResult CreateUpdatePN(PhieuNhap pn)
+        {
+            if (pn.id > 0)
+            {
+                data.PhieuNhaps.Attach(pn);
+                data.Entry(pn).State = EntityState.Modified;
+                data.SaveChanges();
+                return Json(new { success = true });
+            }
+
+
+            try
+            {
+                data.SaveChanges();
+                return Json(new { success = true });
+
+            }
+            catch
+            {
+                return Json(new { success = false });
+
+            }
+        }
+
+
+        [HttpPost]
+        [UserAuthorize]
+        public JsonResult DeletePN(int? id)
+        {
+            var pnDetails = data.ChiTietPhieuNhaps.Where(x => x.id_pn == id).ToList();
+            var pn = data.PhieuNhaps.Find(id);
+            data.ChiTietPhieuNhaps.RemoveRange(pnDetails);
+            data.PhieuNhaps.Remove(pn);
+            var rs = data.SaveChanges();
+            if (rs > 0)
+            {
+                return Json(new { Success = true });
+            }
+            return Json(new { Success = false });
+        }
+*/
     }
+
+
 }

@@ -12,26 +12,19 @@ namespace DoAn.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SanPham
+    public partial class PhieuNhap
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SanPham()
+        public PhieuNhap()
         {
-            this.ChiTietDonHangs = new HashSet<ChiTietDonHang>();
             this.ChiTietPhieuNhaps = new HashSet<ChiTietPhieuNhap>();
         }
     
         public int id { get; set; }
-        public Nullable<int> DM_id { get; set; }
-        public string title { get; set; }
-        public Nullable<int> price { get; set; }
-        public string thumbnail { get; set; }
-        public Nullable<int> quantity { get; set; }
-        public string description { get; set; }
+        public Nullable<System.DateTime> date_add { get; set; }
+        public Nullable<int> total_money { get; set; }
+        public Nullable<int> total_quantity { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
-        public virtual DanhMuc DanhMuc { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietPhieuNhap> ChiTietPhieuNhaps { get; set; }
     }

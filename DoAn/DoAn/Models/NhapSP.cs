@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Xml.Linq;
 
 namespace DoAn.Models
 {
-    public class GioHang
+    public class NhapSP
     {
         RiceStoreEntities data = new RiceStoreEntities();
-
-        public SanPham SanPham { get; set; }
-
         public int id { get; set; }
         [Display(Name = "Tên gạo")]
         public string title { get; set; }
@@ -24,7 +22,10 @@ namespace DoAn.Models
 
         [Display(Name = "Số Lượng")]
         public int quantity { get; set; }
-        
+
+        [Display(Name = "Danh mục")]
+        public String category { get; set; }
+
         //Tính thành tiền
         [Display(Name = "Thành Tiền")]
         public Double thanhtien
@@ -35,14 +36,14 @@ namespace DoAn.Models
             }
         }
 
-        //public GioHang(int id)
-        //{
-        //    this.id = id;
-        //    SanPham gao = data.SanPhams.Single(n => n.id == id);
-        //    this.title =gao.title;
-        //    this.thumbnail = gao.thumbnail;
-        //    price = double.Parse(gao.price.ToString());
-        //    quantity = 1;
-        //}
+        public NhapSP(int id)
+        {
+            this.id = id;
+            SanPham gao = data.SanPhams.Single(n => n.id == id);
+            this.title = gao.title;
+            this.thumbnail = gao.thumbnail;
+            price = double.Parse(gao.price.ToString());
+        }
     }
+
 }

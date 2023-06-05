@@ -227,6 +227,9 @@
     <Compile Include="Models\ChiTietDonHang.cs">
       <DependentUpon>MyData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChiTietPhieuNhap.cs">
+      <DependentUpon>MyData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DanhMuc.cs">
       <DependentUpon>MyData.tt</DependentUpon>
     </Compile>
@@ -258,7 +261,11 @@
     <Compile Include="Models\NhanVien.cs">
       <DependentUpon>MyData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\NhapSP.cs" />
     <Compile Include="Models\PhanQuyen.cs">
+      <DependentUpon>MyData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhieuNhap.cs">
       <DependentUpon>MyData.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SanPham.cs">
@@ -475,7 +482,6 @@
     <Content Include="Views\NhanVien\changePassword.cshtml" />
     <Content Include="Views\NhanVien\Info.cshtml" />
     <Content Include="Views\NhanVien\DoanhThuNam.cshtml" />
-    <Content Include="Views\NhanVien\DoanhThuSPThang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -77,20 +77,21 @@
                     </div>
                 </div>
                 <a href="@Url.Action("NhanVien","NhanVien")">Staff</a>
+                <a href="@Url.Action("SanPham","NhanVien")">Product</a>
                 <a href="@Url.Action("DonHang","NhanVien")">Order</a>
                 <a href="@Url.Action("KhachHang","NhanVien")">Customer</a>
 
-               
+
 
                 @*<a href="#">My Account</a>
-        <a href="#">Documnets</a>*@
+                    <a href="#">Documnets</a>*@
 
                 @*<div class="links">
-            <span>Quick Link</span>
-            <a href="#">Paypal</a>
-            <a href="#">EasyPay</a>
-            <a href="#">SadaPay</a>
-        </div>*@
+                        <span>Quick Link</span>
+                        <a href="#">Paypal</a>
+                        <a href="#">EasyPay</a>
+                        <a href="#">SadaPay</a>
+                    </div>*@
             </div>
         </nav>
 
@@ -110,7 +111,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/custom.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

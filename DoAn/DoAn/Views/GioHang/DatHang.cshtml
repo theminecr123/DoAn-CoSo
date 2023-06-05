@@ -6,125 +6,135 @@
 }
 
 <body class="main-layout inner_page">
-    <div class="shopping-cart">
-
-        <div class="column-labels">
-            <label class="product-image">Image</label>
-            <label class="product-title">Product</label>
-            <label class="product-price"><span style="margin-right:70px">Giá</span></label>
-            <label class="product-quantity"><span style="margin-right:0px">Số lượng</span></label>
-            <label class="product-removal">Remove</label>
-            <label class="product-line-price"><span style="margin-right: 70px;">Tổng</span></label>
-        </div>
-        @foreach (var item in Model)
-        {
-            <div class="product">
-                <div class="product-image">
-                    <a href="@Url.Action("Detail","SanPham", new {id=item.id })">
-                        <img src=@Url.Content(item.thumbnail) class="img-responsive" alt="" />
-                    </a>
-                </div>
-                @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { @id = item.id }))
+    <table class="table table-borderless table-shopping-cart">
+        <thead class="text-muted">
+            <tr class="small text-uppercase">
+                <th scope="col">Product</th>
+                <th scope="col" width="120">Quantity</th>
+                <th scope="col" width="120">Price</th>
+                <th scope="col" class="text-right" width="200"> </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
                 {
-                    <div class="product-title">@item.title</div>
-
-                    <div class="product-price">@String.Format("{0:0,0}", item.price) VNĐ </div>
-                    <div class="product-quantity">@item.quantity     </div>
-
-
-
-                    <div class="product-line-price">@String.Format("{0:0,0}", item.thanhtien) VNĐ</div>
-
-
-                }
-
-
-            </div>
-
-
-        }
-        @using DoAn.Models
-        <h2>Thông tin đặt hàng</h2>
-        @{
-            KhachHang kh = (KhachHang)Session["TaiKhoan"];
-        }
-
-
-        <div class="row">
-            <div class="column" style=" float: left; width: 50%; padding: 10px;">
-
-                
-
-
-            </div>
-            <div class="column" style="float: left; width: 50%; padding: 10px">
-
-                <table align="right" class="row-cols-2" style="display:flex">
-                    @using (Html.BeginForm())
-                    {
-                        @Html.ValidationSummary(true)
-                        <tr style="height:40px">
-                            <td>Họ tên khách hàng:</td>
-                            <td style="font-weight:bold">@kh.fullname</td>
-                        </tr>
-                        <tr style="height:40px">
-                            <td>Email:</td>
-                            <td style="font-weight:bold">@kh.email</td>
-                        </tr>
-                        <tr style="height:40px">
-                            <td>Địa chỉ:</td>
-                            <td style="font-weight:bold">@kh.address</td>
-                        </tr>
-                        <tr style="height:40px">
-                            <td>Điện thoại:</td>
-                            <td style="font-weight:bold">@kh.phone_number</td>
-                        </tr>
-                        <tr style="height:40px">
-                            <td>Ngày đặt:</td>
-                            <td style="font-weight:bold">@DateTime.Now.ToShortDateString()</td>
-                        </tr>
-
-
-
-                    }
-                    <tr>
+                    <tr id="product-@item.SanPham.id">
                         <td>
-                            <div class="totals" style="width:300px; float:left">
+                            <figure class="itemside">
+                                <div class="aside"><img src="@item.SanPham.thumbnail" class="img-sm" style="width:50%"></div>
+                                <figcaption class="info">
+                                    <a href="#" class="title text-dark">@item.SanPham.title</a>
+                                </figcaption>
+                            </figure>
+                        </td>
+                        <td>
+                            <input type="text" value="@item.quantity" />
+                        </td>
+                        <td>
+                            <div class="price-wrap">
+                                <var class="price">@item.thanhtien</var>
+                            </div> <!-- price-wrap .// -->
+                        </td>
+                        <td class="text-right">
+                            <input type="hidden" value="@item.SanPham.id" id="productid" />
 
-                                <div class="totals-item">
-                                    <label>Số loại gạo:</label>
-                                    <div class="totals-value" id="cart-tax">@ViewBag.Tongsoluongsanpham</div>
-                                </div>
-                                <div class="totals-item">
-                                    <label>Tổng sản phẩm:</label>
-                                    <div class="totals-value" id="cart-shipping">@ViewBag.Tongsoluong</div>
-                                </div>
-                                <div class="totals-item totals-item-total" style="font-size:20px; font-weight:bold ">
-                                    <label>Tổng cộng:</label>
-                                    <div class="totals-value" id="cart-subtotal">@String.Format("{0:0,0}", @ViewBag.Tongtien) VNĐ</div>
-                                </div>
-                            </div>
-
-                            @using (Html.BeginForm("DatHang", "GioHang"))
-                            {
-                                <button type="submit" class="checkout">Oncash</button>
-
-                            }
-
-                            <a href="@Url.Action("PaymentVNPay","GioHang" )">
-                                <img src=~/Content/images/Trang_Tri1/vnpay.png width="100" class="vnpay" alt="" />
-                            </a>
 
                         </td>
                     </tr>
-                </table>
+                }
+            }
+            else
+            {
+                <p>Không có sản phẩm trong giỏ hàng</p>
+            }
 
 
-            </div>
+        </tbody>
+    </table>
+    @using DoAn.Models
+    <h2>Thông tin đặt hàng</h2>
+    @{
+        KhachHang kh = (KhachHang)Session["TaiKhoan"];
+    }
+
+
+    <div class="row">
+        <div class="column" style=" float: left; width: 50%; padding: 10px;">
+
+
+
+
         </div>
+        <div class="column" style="float: left; width: 50%; padding: 10px">
+
+            <table align="right" class="row-cols-2" style="display:flex">
+                @using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary(true)
+                    <tr style="height:40px">
+                        <td>Họ tên khách hàng:</td>
+                        <td style="font-weight:bold">@kh.fullname</td>
+                    </tr>
+                    <tr style="height:40px">
+                        <td>Email:</td>
+                        <td style="font-weight:bold">@kh.email</td>
+                    </tr>
+                    <tr style="height:40px">
+                        <td>Địa chỉ:</td>
+                        <td style="font-weight:bold">@kh.address</td>
+                    </tr>
+                    <tr style="height:40px">
+                        <td>Điện thoại:</td>
+                        <td style="font-weight:bold">@kh.phone_number</td>
+                    </tr>
+                    <tr style="height:40px">
+                        <td>Ngày đặt:</td>
+                        <td style="font-weight:bold">@DateTime.Now.ToShortDateString()</td>
+                    </tr>
 
 
-        
+
+                }
+                <tr>
+                    <td>
+                        <div class="totals" style="width:300px; float:left">
+
+                            <div class="totals-item">
+                                <label>Số loại gạo:</label>
+                                <div class="totals-value" id="cart-tax">@ViewBag.Tongsoluongsanpham</div>
+                            </div>
+                            <div class="totals-item">
+                                <label>Tổng sản phẩm:</label>
+                                <div class="totals-value" id="cart-shipping">@ViewBag.Tongsoluong</div>
+                            </div>
+                            <div class="totals-item totals-item-total" style="font-size:20px; font-weight:bold ">
+                                <label>Tổng cộng:</label>
+                                <div class="totals-value" id="cart-subtotal">@String.Format("{0:0,0}", @ViewBag.Tongtien) VNĐ</div>
+                            </div>
+                        </div>
+
+                        @using (Html.BeginForm("DatHang", "GioHang"))
+                        {
+                            <button type="submit" class="checkout">Oncash</button>
+
+                        }
+
+                        <a href="@Url.Action("PaymentVNPay","GioHang" )">
+                            <img src=~/Content/images/Trang_Tri1/vnpay.png width="100" class="vnpay" alt="" />
+                        </a>
+
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
+
+
+
 
     </div>
 </body>

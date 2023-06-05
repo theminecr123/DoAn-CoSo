@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5ac8d2ab6c61459e99ec57888d775faf" Name="Diagram1">
+      <Diagram DiagramId="5ac8d2ab6c61459e99ec57888d775faf" Name="Diagram1" ZoomLevel="113">
         <EntityTypeShape EntityType="RiceStoreModel.ChiTietDonHang" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="RiceStoreModel.DanhMuc" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="RiceStoreModel.DonHang" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
@@ -19,7 +19,11 @@
         <AssociationConnector Association="RiceStoreModel.FK_DonHang_KhachHang" ManuallyRouted="false" />
         <AssociationConnector Association="RiceStoreModel.FK_KhachHang_PhanQuyen" ManuallyRouted="false" />
         <AssociationConnector Association="RiceStoreModel.FK_NhanVien_PhanQuyen" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="RiceStoreModel.ChiTietPhieuNhap" Width="1.5" PointX="11.125" PointY="0.5" />
+        <EntityTypeShape EntityType="RiceStoreModel.PhieuNhap" Width="1.5" PointX="8.875" PointY="6.75" />
+        <AssociationConnector Association="RiceStoreModel.FK_ChiTietPhieuNhap_PhieuNhap" />
+        <AssociationConnector Association="RiceStoreModel.FK_ChiTietPhieuNhap_SanPham" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

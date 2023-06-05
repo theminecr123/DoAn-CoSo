@@ -10,6 +10,10 @@ using System.Web.UI;
 using X.PagedList;
 using Microsoft.Ajax.Utilities;
 using System.Web.Management;
+using System.Text.RegularExpressions;
+using System.Text;
+using System.Net;
+using DoAn.common;
 
 namespace DoAn.Controllers
 {
@@ -49,22 +53,45 @@ namespace DoAn.Controllers
             int pageNum = page ?? 1;
             return View(all_sp.ToPagedList(pageNum, pageSize));
         }
-      
 
-        public ActionResult Detail(int id)
+        public ActionResult Detail(int? id, string title)
         {
-            var sp = data.SanPhams.Where(m => m.id == id).First();
-            if(sp != null)
+            if (id == null)
             {
+                return RedirectToAction("Index", "SanPham");
+            }
+
+            var sp = data.SanPhams.FirstOrDefault(m => m.id == id);
+            if (sp != null)
+            {
+                string expectedTitle = convertToUnSign3(sp.title);
+                if (title != expectedTitle)
+                {
+                    // If the provided title doesn't match the expected title, redirect to the correct URL
+                    return RedirectToAction("Detail", "SanPham", new { id = id, title = expectedTitle });
+                }
+
                 return View(sp);
             }
             else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "SanPham");
             }
-            
         }
 
-       
+        public static string convertToUnSign3(string s)
+        {
+            Regex regex = new Regex("\\p{IsCombiningDiacriticalMarks}+");
+            string temp = s.Normalize(NormalizationForm.FormD);
+            // Replace whitespace characters with dashes
+            temp = Regex.Replace(s, @"\s+", "-").Trim();
+
+            // Replace multiple dashes with a single dash
+            temp = Regex.Replace(s, @"-+", "-");
+            return regex.Replace(temp, String.Empty);
+        }
+   
+
+
     }
 }
