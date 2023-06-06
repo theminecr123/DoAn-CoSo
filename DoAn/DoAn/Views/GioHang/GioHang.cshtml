@@ -50,6 +50,49 @@
 
     });
 </script>
+<script>
+    $(document).ready(function () {
+    $(".quantityInput").change(function () {
+        var quantityInput = $(this);
+        var quantity = quantityInput.val();
+        var productId = quantityInput.data('product-id');
+        var row = quantityInput.closest('tr');
+
+        // Create the model object
+        var model = {
+            Id: productId,
+            Quantity: quantity
+        };
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UpdateQuantity", "GioHang")',
+            data: JSON.stringify(model),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                // Update the price and total price in the current row
+                row.find(".price").text(result.price.toLocaleString() + " VNĐ");
+                row.find(".totalPrice").text(result.totalPrice);
+
+                // Update the total price in the sidebar
+                var totalPrice = result.totalPrice;
+                $(".totalPrice").each(function () {
+                    totalPrice += parseFloat($(this).text());
+                });
+                $("#sidebarTotalPrice").text(totalPrice.toLocaleString() + " VNĐ");
+                // Optionally, you can display a success message or perform other actions
+            },
+            error: function () {
+                alert("An error occurred while updating the quantity.");
+            }
+        });
+    });
+
+    // Rest of your code...
+});
+
+</script>
 
 <body class="main-layout inner_page">
 
@@ -76,18 +119,22 @@
                                         <tr id="product-@item.SanPham.id">
                                             <td>
                                                 <figure class="itemside">
-                                                    <div class="aside"><img src="@item.SanPham.thumbnail" class="img-sm" style="width:50%"></div>
+                                                    <div class="aside">
+                                                        <a href="@Url.Action("Detail", "SanPham", new { id = item.SanPham.id })">
+                                                            <img src="@item.SanPham.thumbnail" class="img-sm" style="width:50%" />
+                                                        </a>
+                                                    </div>
                                                     <figcaption class="info">
                                                         <a href="#" class="title text-dark">@item.SanPham.title</a>
                                                     </figcaption>
                                                 </figure>
                                             </td>
                                             <td>
-                                                <input type="number" value="@item.quantity" />
+                                                <input type="number" class="quantityInput" value="@item.quantity" data-product-id="@item.SanPham.id" />
                                             </td>
                                             <td>
                                                 <div class="price-wrap">
-                                                    <var class="price">@item.thanhtien</var>
+                                                    <var class="price">@String.Format("{0:0,0}", item.thanhtien) VNĐ</var>
                                                 </div> <!-- price-wrap .// -->
                                             </td>
                                             <td class="text-right">
@@ -132,7 +179,7 @@
                             </dl>
                             <dl class="dlist-align">
                                 <dt>Total price:</dt>
-                                <dd class="text-right">@String.Format("{0:0,0}", @ViewBag.Tongtien) VNĐ</dd>
+                                <dd class="text-right" id="sidebarTotalPrice">@String.Format("{0:0,0}", @ViewBag.Tongtien) VNĐ</dd>
                             </dl>
                             <button id="deleteAllButton">Delete All</button>
 

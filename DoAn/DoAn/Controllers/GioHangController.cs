@@ -52,6 +52,42 @@ namespace DoAn.Controllers
             
             return Json(new { Message = "Thành công", JsonRequestBehavior.AllowGet });
         }
+        public ActionResult UpdateQuantity(int id, int quantity)
+        {
+            List<GioHang> cart = Session["cart"] as List<GioHang>;
+            if (cart != null)
+            {
+                // Find the corresponding item in the cart
+                var cartItem = cart.FirstOrDefault(item => item.SanPham.id == id);
+                if (cartItem != null)
+                {
+                    // Update the quantity
+                    cartItem.quantity = quantity;
+
+                    // Calculate the new price and total price (Replace with your own logic)
+                    cartItem.thanhtien = (double)cartItem.SanPham.price * quantity;
+
+                    // Calculate the total price
+                    double totalPrice = TongTien();
+
+                    // Save changes (if necessary)
+                    // db.SaveChanges(); // If you need to save changes to the database
+
+                    // Create an anonymous object with the updated values
+                    var updatedValues = new
+                    {
+                        price = cartItem.thanhtien,
+                        totalPrice = totalPrice
+                    };
+
+                    // Return the updated values as JSON
+                    return Json(updatedValues, JsonRequestBehavior.AllowGet);
+                }
+            }
+
+            return HttpNotFound();
+        }
+
 
         private int isExist(int id)
         {
@@ -61,17 +97,6 @@ namespace DoAn.Controllers
                     return i;
             return -1;
         }
-        //[HttpPost]
-        //public ActionResult UpdateTotal(int quantity)
-        //{
-        //    // Calculate the new total based on the quantity
-        //    decimal total = TongTien(quantity);
-
-        //    // Return the updated total as JSON
-        //    return Json(new { total = total });
-        //}
-
-        //xóa sản phẩm khỏi giỏ hàng theo id
         public ActionResult Remove(int id)
         {
             List<GioHang> li = (List<GioHang>)Session["cart"];
@@ -93,13 +118,20 @@ namespace DoAn.Controllers
         }
         private double TongTien()
         {
-            double tt = 0;
-            List<GioHang> li = (List<GioHang>)Session["cart"];
-            if (li != null)
+            List<GioHang> cart = Session["cart"] as List<GioHang>;
+            if (cart != null)
             {
-                tt = li.Sum(n => n.thanhtien);
+                double totalPrice = 0;
+
+                foreach (var item in cart)
+                {
+                    totalPrice += item.thanhtien;
+                }
+
+                return totalPrice;
             }
-            return tt;
+
+            return 0; // Return 0 if the cart is empty or null
         }
 
 
@@ -116,6 +148,7 @@ namespace DoAn.Controllers
 
         public ActionResult GioHangPartial()
         {
+
             ViewBag.Tongtien = TongTien();
             ViewBag.Tongsoluongsanpham = TongSoLuongSanPham();
             return PartialView();

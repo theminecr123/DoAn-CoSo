@@ -33,8 +33,12 @@ namespace DoAn.Models
             {
                 return quantity * price;
             }
+            set
+            {
+            }
         }
 
+    
         //public GioHang(int id)
         //{
         //    this.id = id;

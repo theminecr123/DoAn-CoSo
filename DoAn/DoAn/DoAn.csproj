@@ -261,7 +261,6 @@
     <Compile Include="Models\NhanVien.cs">
       <DependentUpon>MyData.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\NhapSP.cs" />
     <Compile Include="Models\PhanQuyen.cs">
       <DependentUpon>MyData.tt</DependentUpon>
     </Compile>
