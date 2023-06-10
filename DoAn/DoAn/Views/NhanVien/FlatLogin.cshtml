@@ -60,22 +60,9 @@
         align-items: center;
         min-height: 100vh;
         font-family: 'Jost', sans-serif;
-        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-    }
-    .btn-back:hover {
-        background-color: #ddd;
-        color: black;
+        background: url("https://thuthuatnhanh.com/wp-content/uploads/2020/03/hinh-nen-mau-xanh-la-cay-dam.jpg") no-repeat;
     }
 
-    .btn-back {
-        float: left;
-        width: 30px;
-        text-decoration: none;
-        display: inline-block;
-        background-color: #1c173c;
-        color: white;
-        border-radius: 2px;
-    }
     .main {
         width: 350px;
         height: 700px;
@@ -90,6 +77,11 @@
         display: none;
     }
 
+    .signup {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
 
     label {
         color: #fff;
@@ -103,7 +95,12 @@
     }
 
     .btn-back:hover {
-        background-color: #ddd;
+        background-color: #0edf10;
+        color: black;
+    }
+
+    .btn-back:hover {
+        background-color: #0edf10;
         color: black;
     }
 
@@ -112,7 +109,7 @@
         width: 30px;
         text-decoration: none;
         display: inline-block;
-        background-color: #1c173c;
+        background-color: #23c009;
         color: white;
         border-radius: 2px;
     }
@@ -137,7 +134,7 @@
         justify-content: center;
         display: block;
         color: #fff;
-        background: #573b8a;
+        background: #23c009;
         font-size: 1em;
         font-weight: bold;
         margin-top: 20px;
@@ -149,7 +146,7 @@
     }
 
         button:hover {
-            background: #6d44b8;
+            background: #0edf10;
         }
 
     .login {
@@ -157,13 +154,24 @@
         background: #eee;
         border-radius: 80% / 10%;
         transition: .8s ease-in-out;
-
     }
 
         .login label {
             color: #573b8a;
             transform: scale(.6);
         }
+
+    #chk:checked ~ .login {
+        transform: translateY(-680px);
+    }
+
+        #chk:checked ~ .login label {
+            transform: scale(1);
+        }
+
+    #chk:checked ~ .signup label {
+        transform: scale(.6);
+    }
 
     
 </style>

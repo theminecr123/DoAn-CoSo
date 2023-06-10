@@ -232,15 +232,11 @@ namespace DoAn.Controllers
 
             data.SaveChanges();
             Session["cart"] = null;
-            return RedirectToAction("Index", "SanPham");
+            return RedirectToAction("PaymentConfirm", "GioHang");
         }
 
         public ActionResult PaymentVNPay()
         {
-
-
-
-
 
             double a = TongTien();
             double total = a * 100;
@@ -272,8 +268,10 @@ namespace DoAn.Controllers
             return Redirect(paymentUrl);
         }
 
+    
         public ActionResult PaymentConfirm()
         {
+
             if (Request.QueryString.Count > 0)
             {
                 string hashSecret = ConfigurationManager.AppSettings["HashSecret"]; //Chuỗi bí mật

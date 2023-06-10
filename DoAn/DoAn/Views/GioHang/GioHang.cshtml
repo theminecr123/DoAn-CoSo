@@ -130,7 +130,7 @@
                                                 </figure>
                                             </td>
                                             <td>
-                                                <input type="number" class="quantityInput" value="@item.quantity" data-product-id="@item.SanPham.id" />
+                                                <input type="number" class="quantityInput" value="@item.quantity" data-product-id="@item.SanPham.id" min="1" />
                                             </td>
                                             <td>
                                                 <div class="price-wrap">
@@ -170,7 +170,7 @@
 
                 </main> <!-- col.// -->
                 <aside class="col-md-3">
- 
+
                     <div class="card">
                         <div class="card-body">
                             <dl class="dlist-align">
@@ -181,7 +181,7 @@
                                 <dt>Total price:</dt>
                                 <dd class="text-right" id="sidebarTotalPrice">@String.Format("{0:0,0}", @ViewBag.Tongtien) VNĐ</dd>
                             </dl>
-                            <button id="deleteAllButton">Delete All</button>
+                            <button class="BtndeleteAll" id="deleteAllButton">Delete All</button>
 
                             <hr>
 
@@ -196,112 +196,132 @@
 </body>
 
 
-
-@*@model IEnumerable<DoAn.Models.GioHang>
-
-    @{
-        ViewBag.Title = "Index";
-        Layout = "~/Views/Shared/_Layout.cshtml";
+<style>
+    /* Body/Header stuff */
+    body {
+        font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: 100;
     }
 
-    <body class="main-layout inner_page">
-        <div class="shopping-cart">
+    .column-labels {
+        margin-top: 10px
+    }
 
-            <div class="column-labels">
-                <label class="product-image">Image</label>
-                <label class="product-title">Product</label>
-                <label class="product-price"><span style="margin-right:70px">Giá</span></label>
-                <label class="product-quantity"><span style="padding-right:10px">Số lượng</span></label>
-                <label class="product-removal">Remove</label>
-                <label class="product-line-price"><span style="margin-right: 70px;">Tổng</span></label>
-            </div>
-            @foreach (var item in Model)
-            {
-                <div class="product">
-                    <div class="product-image">
-                        <a href="@Url.Action("Detail","SanPham", new {id=item.id })">
-                            <img src=@Url.Content(item.thumbnail) class="img-responsive" alt="" />
-                        </a>
-                    </div>
-                    @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { @id = item.id }))
-                    {
-                        <div class="product-title">@item.title</div>
+    h1 {
+        font-weight: 100;
+        margin-top: 50px;
+        margin-right: 50px;
+    }
 
-                        <div class="product-price">@String.Format("{0:0,0}", item.price) VNĐ </div>
-                        <div class="product-quantity">
-                            <input type="number" min="1" name="txtSoLg" value="@item.quantity">
-                        </div>
-
-
-
-                        <div class="product-line-price">@String.Format("{0:0,0}", item.thanhtien) VNĐ</div>
-
-                        <div class="product-update">
-                            <button type="submit" class="update-product">
-                                Reload
-                            </button>
-                        </div>
-                    }
-                    @using (Html.BeginForm("XoaGioHang", "GioHang", new { @id = item.id }))
-                    {
-                        <div class="product-removal">
-
-                            <button class="remove-product">
-                                Remove
-                            </button>
-                        </div>
-                    }
-
-                </div>
-
-
-            }
+    label {
+        color: #aaa;
+    }
 
 
 
 
-            <div class="totals">
+    .checkout {
+        padding: 12.5px 30px;
+        border: 0;
+        border-radius: 100px;
+        background-color: #008000;
+        color: #ffffff;
+        font-weight: Bold;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+    }
 
-                <div class="totals-item">
-                    <label>Số loại gạo:</label>
-                    <div class="totals-value" id="cart-tax">@ViewBag.Tongsoluongsanpham</div>
-                </div>
-                <div class="totals-item">
-                    <label>Tổng sản phẩm:</label>
-                    <div class="totals-value" id="cart-shipping">@ViewBag.Tongsoluong</div>
-                </div>
-                <div class="totals-item totals-item-total" style="font-size:20px; font-weight:bold ">
-                    <label>Tổng cộng:</label>
-                    <div class="totals-value" id="cart-subtotal">@String.Format("{0:0,0}", @ViewBag.Tongtien) VNĐ</div>
-                </div>
-            </div>
-            @using (Html.BeginForm("DatHang", "GioHang", FormMethod.Get))
-            {
-                <button type="submit" class="checkout">Checkout</button>
-
-            }
-
-        </div>
-    </body>*@
-    <style>
-        /* Body/Header stuff */
-        body {
-            font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-weight: 100;
-        }
-        .column-labels{
-            margin-top:10px
+        .checkout:hover {
+            background-color: #28dc0b;
+            box-shadow: 0 0 20px #6fc5ff50;
+            transform: scale(1.1);
         }
 
-        h1 {
-            font-weight: 100;
-            margin-top: 50px;
-            margin-right: 50px;
+        .checkout:active {
+            background-color: #3d94cf;
+            transition: all 0.25s;
+            -webkit-transition: all 0.25s;
+            box-shadow: none;
+            transform: scale(0.98);
         }
 
-        label {
-            color: #aaa;
+
+
+
+    .Continue {
+        padding: 12.5px 30px;
+        border: 0;
+        border-radius: 100px;
+        background-color: #008000;
+        color: #ffffff;
+        font-weight: Bold;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+    }
+
+        .Continue:hover {
+            background-color: #00FF00;
+            box-shadow: 0 0 20px #6fc5ff50;
+            transform: scale(1.1);
         }
 
-    </style>
+        .Continue:active {
+            background-color: #3d94cf;
+            transition: all 0.25s;
+            -webkit-transition: all 0.25s;
+            box-shadow: none;
+            transform: scale(0.98);
+        }
 
+
+    .BtndeleteAll {
+        padding: 12.5px 30px;
+        border: 0;
+        border-radius: 50px;
+        background-color: #EF4765;
+        color: #ffffff;
+        font-weight: Bold;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+    }
+
+        .BtndeleteAll:hover {
+            background-color: #ff0000;
+            box-shadow: 0 0 20px #6fc5ff50;
+            transform: scale(1.1);
+        }
+
+        .BtndeleteAll:active {
+            background-color: #3d94cf;
+            transition: all 0.25s;
+            -webkit-transition: all 0.25s;
+            box-shadow: none;
+            transform: scale(0.98);
+        }
+
+
+    .removeButton {
+        padding: 12.5px 30px;
+        border: 0;
+        border-radius: 50px;
+        background-color: #EF4765;
+        color: #ffffff;
+        font-weight: Bold;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+    }
+
+        .removeButton:hover {
+            background-color: #ff0000;
+            box-shadow: 0 0 20px #6fc5ff50;
+            transform: scale(1.1);
+        }
+
+        .removeButton:active {
+            background-color: #3d94cf;
+            transition: all 0.25s;
+            -webkit-transition: all 0.25s;
+            box-shadow: none;
+            transform: scale(0.98);
+        }
+</style>

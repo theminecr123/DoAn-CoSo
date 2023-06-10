@@ -16,32 +16,32 @@
             @Html.HiddenFor(model => model.id)
 
             <div class="form-group">
-                @Html.LabelFor(model => model.fullname, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <span style="font-size: 20px; font-weight: bold">Tên khách hàng</span>
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.fullname, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.fullname, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <span style="font-size: 20px; font-weight: bold">Email</span>
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
                     @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.phone_number, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <span style="font-size: 20px; font-weight: bold">Số điện thoại</span>
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.phone_number, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
                     @Html.ValidationMessageFor(model => model.phone_number, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.address, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                <span style="font-size: 20px; font-weight: bold">Địa chỉ</span>
+                <div class="col-md-4">
                     @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
                 </div>
@@ -52,7 +52,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="Save" class="custom-button btn btn-primary" />
                 </div>
             </div>
 
@@ -61,6 +61,70 @@
     }
 </body>
 
-<div>
+<div class="backtolist">
     @Html.ActionLink("Back to List", "Index", "SanPham")
 </div>
+
+<style>
+    .custom-button {
+        margin-top: 10px;
+    }
+
+
+    .backtolist {
+        margin-top: 10px;
+        margin-left: 20px;
+        appearance: none;
+        background-color: #2ea44f;
+        border: 1px solid rgba(27, 31, 35, .15);
+        border-radius: 6px;
+        box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+        box-sizing: border-box;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        padding: 6px 16px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+        .backtolist:focus:not(:focus-visible):not(.focus-visible) {
+            box-shadow: none;
+            outline: none;
+        }
+
+        .backtolist:hover {
+            background-color: #2c974b;
+        }
+
+        .backtolist:focus {
+            box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+            outline: none;
+        }
+
+        .backtolist:disabled {
+            background-color: #94d3a2;
+            border-color: rgba(27, 31, 35, .1);
+            color: rgba(255, 255, 255, .8);
+            cursor: default;
+        }
+
+        .backtolist:active {
+            background-color: #298e46;
+            box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+        }
+
+    .form-group {
+        margin-left: 20px;
+    }
+</style>

@@ -6,149 +6,150 @@
 }
 
 <body class="main-layout inner_page">
-    <table class="table table-borderless table-shopping-cart">
-        <thead class="text-muted">
-            <tr class="small text-uppercase">
-                <th scope="col">Product</th>
-                <th scope="col" width="120">Quantity</th>
-                <th scope="col" width="120">Price</th>
-                <th scope="col" class="text-right" width="200"> </th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null)
-            {
-                foreach (var item in Model)
-                {
-                    <tr id="product-@item.SanPham.id">
-                        <td>
-                            <figure class="itemside">
-                                <div class="aside"><img src="@item.SanPham.thumbnail" class="img-sm" style="width:50%"></div>
-                                <figcaption class="info">
-                                    <a href="#" class="title text-dark">@item.SanPham.title</a>
-                                </figcaption>
-                            </figure>
-                        </td>
-                        <td>
-                            <input type="text" value="@item.quantity" />
-                        </td>
-                        <td>
-                            <div class="price-wrap">
-                                <var class="price">@String.Format("{0:0,0}", item.thanhtien) VNĐ</var>
-                            </div> <!-- price-wrap .// -->
-                        </td>
-                        <td class="text-right">
-                            <input type="hidden" value="@item.SanPham.id" id="productid" />
+    <div class="table-container">
+        <table class="table table-borderless table-shopping-cart">
+            <thead class="text-muted">
+                <tr class="small text-uppercase">
+                    <th scope="col" style="padding-left:60px">Product</th>
+                    <th scope="col" width="120">Quantity</th>
+                    <th scope="col" width="50">Price</th>
 
-
-                        </td>
-                    </tr>
-                }
-            }
-            else
-            {
-                <p>Không có sản phẩm trong giỏ hàng</p>
-            }
-
-
-        </tbody>
-    </table>
-    @using DoAn.Models
-    <h2>Thông tin đặt hàng</h2>
-    @{
-        KhachHang kh = (KhachHang)Session["TaiKhoan"];
-    }
-
-
-    <div class="row">
-        <div class="column" style=" float: left; width: 50%; padding: 10px;">
-
-
-
-
-        </div>
-        <div class="column" style="float: left; width: 50%; padding: 10px">
-
-            <table align="right" class="row-cols-2" style="display:flex">
-                @using (Html.BeginForm())
-                {
-                    @Html.ValidationSummary(true)
-                    <tr style="height:40px">
-                        <td>Họ tên khách hàng:</td>
-                        <td style="font-weight:bold">@kh.fullname</td>
-                    </tr>
-                    <tr style="height:40px">
-                        <td>Email:</td>
-                        <td style="font-weight:bold">@kh.email</td>
-                    </tr>
-                    <tr style="height:40px">
-                        <td>Địa chỉ:</td>
-                        <td style="font-weight:bold">@kh.address</td>
-                    </tr>
-                    <tr style="height:40px">
-                        <td>Điện thoại:</td>
-                        <td style="font-weight:bold">@kh.phone_number</td>
-                    </tr>
-                    <tr style="height:40px">
-                        <td>Ngày đặt:</td>
-                        <td style="font-weight:bold">@DateTime.Now.ToShortDateString()</td>
-                    </tr>
-
-
-
-                }
-                <tr>
-                    <td>
-                        <div class="totals" style="width:300px; float:left">
-
-                            <div class="totals-item">
-                                <label>Số loại gạo:</label>
-                                <div class="totals-value" id="cart-tax">@ViewBag.Tongsoluongsanpham</div>
-                            </div>
-                            <div class="totals-item">
-                                <label>Tổng sản phẩm:</label>
-                                <div class="totals-value" id="cart-shipping">@ViewBag.Tongsoluong</div>
-                            </div>
-                            <div class="totals-item totals-item-total" style="font-size:20px; font-weight:bold ">
-                                <label>Tổng cộng:</label>
-                                <div class="totals-value" id="cart-subtotal">@String.Format("{0:0,0}", @ViewBag.Tongtien) VNĐ</div>
-                            </div>
-                        </div>
-
-                        @using (Html.BeginForm("DatHang", "GioHang"))
-                        {
-                            <button type="submit" class="checkout">Oncash</button>
-
-                        }
-
-                        <a href="@Url.Action("PaymentVNPay","GioHang" )">
-                            <img src=~/Content/images/Trang_Tri1/vnpay.png width="100" class="vnpay" alt="" />
-                        </a>
-
-                    </td>
                 </tr>
-            </table>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr id="product-@item.SanPham.id">
+                            <td>
+                                <figure class="itemside">
+                                    <div class="aside"><img src="@item.SanPham.thumbnail" class="img-sm" style="width:50%"></div>
+                                    <figcaption class="info">
+                                        <a href="#" class="title text-dark">@item.SanPham.title</a>
+                                    </figcaption>
+                                </figure>
+                            </td>
+                            <td>
+                                <p> @item.quantity</p>
+                            </td>
+                            <td>
+                                <div class="price-wrap">
+                                    <var class="price">@String.Format("{0:0,0}", item.thanhtien)</var>
+                                </div> <!-- price-wrap .// -->
+                            </td>
+                            <td class="text-right">
+                                <input type="hidden" value="@item.SanPham.id" id="productid" />
 
 
-        </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <p>Không có sản phẩm trong giỏ hàng</p>
+                }
+
+
+            </tbody>
+        </table>
+
+
+
+
+        <table class="row-cols-4" style="display:flex; margin-left: 200px">
+            @using DoAn.Models
+            @{
+                KhachHang kh = (KhachHang)Session["TaiKhoan"];
+            }
+
+            @using (Html.BeginForm())
+            {
+
+                @Html.ValidationSummary(true)
+
+                <tr style="height:40px">
+                    <td style="padding-left: 120px;font-size: 20px;font-weight: bold">Thông tin đặt hàng</td>
+
+                </tr>
+                <tr style="height:40px">
+                    <td>Họ tên khách hàng:</td>
+                    <td style="font-weight:bold">@kh.fullname</td>
+                </tr>
+                <tr style="height:40px">
+                    <td>Email:</td>
+                    <td style="font-weight:bold">@kh.email</td>
+                </tr>
+                <tr style="height:40px">
+                    <td>Địa chỉ:</td>
+                    <td style="font-weight:bold">@kh.address</td>
+                </tr>
+                <tr style="height:40px">
+                    <td>Điện thoại:</td>
+                    <td style="font-weight:bold">@kh.phone_number</td>
+                </tr>
+                <tr style="height:40px">
+                    <td>Ngày đặt:</td>
+                    <td style="font-weight:bold">@DateTime.Now.ToShortDateString()</td>
+                </tr>
+            }
+            <tr>
+                <td>
+                    <div class="totals" style="width:300px; float:left">
+
+                        <div class="totals-item">
+                            <label>Số loại gạo:</label>
+                            <div class="totals-value" id="cart-tax">@ViewBag.Tongsoluongsanpham</div>
+                        </div>
+                        <div class="totals-item">
+                            <label>Tổng sản phẩm:</label>
+                            <div class="totals-value" id="cart-shipping">@ViewBag.Tongsoluong</div>
+                        </div>
+                        <div class="totals-item totals-item-total" style="font-size:20px; font-weight:bold ">
+                            <label>Tổng cộng:</label>
+                            <div class="totals-value" id="cart-subtotal">@String.Format("{0:0,0}", @ViewBag.Tongtien) VNĐ</div>
+                        </div>
+                    </div>
+
+                    @using (Html.BeginForm("DatHang", "GioHang"))
+                    {
+                        <button type="submit" class="checkout">Oncash</button>
+
+                    }
+                    <a href="@Url.Action("PaymentVNPay","GioHang" )">
+                        <img src=~/Content/images/Trang_Tri1/vnpay.png width="100" class="vnpay" alt="" />
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+
     </div>
 
-
-
-
-    </div>
 </body>
 <style>
+
+
     @@import "compass/css3";
     /* I wanted to go with a mobile first approach, but it actually lead to more verbose CSS in this case, so I've gone web first. Can't always force things... Side note: I know that this style of nesting in SASS doesn't result in the most performance efficient CSS code... but on the OCD/organizational side, I like it. So for CodePen purposes, CSS selector performance be damned. */
     /* Global settings */
     /* Global "table" column settings */
-    .table-info{
-        
+    .table-info {
     }
-    .vnpay{
+
+    .table-container {
+        display: flex;
+    }
+
+        .table-container table {
+            flex: 1;
+            padding: 20px;
+        }
+
+    .vnpay {
         border: outset;
-        width : 100px;
+        width: 100px;
         height: 100px;
     }
 
@@ -317,7 +318,7 @@
 
     .totals .totals-item-total {
         font-family: 'HelveticaNeue-Medium', 'Helvetica Neue Medium';
-        margin-right:100px;
+        margin-right: 100px;
     }
 
     .checkout {

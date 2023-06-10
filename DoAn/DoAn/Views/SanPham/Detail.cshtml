@@ -21,17 +21,18 @@
             {
                 <button type="submit" class="btn-back"><span>&#8249</span></button>
             }
-            <div class="product-img">
+            <div class="product-img" style="margin-left: 20px; font-size: 20px">
                 <img src="@Model.thumbnail" height="420" width="327">
                 Số lượng
-                <div class="input-group">
-                    <input type="number" id="ipQuantity" class="form-control" value="1">
+                <div class="input-group" style="width:70px;">
+                    <input type="number" id="ipQuantity" class="form-control" value="1" min="1">
                 </div>
-                <div class="product-price-btn">
-                    <p>Giá: <span>@String.Format("{0:0,0}", @Model.price)</span>VNĐ</p>
 
-                    <button type="submit" id="addtocart" class="btn-price-btn">
-                        <span>Add</span>
+                <div class="product-price-btn">
+                    <p style="font-size: 20px">Giá: <span>@String.Format("{0:0,0}", @Model.price)</span> VNĐ</p>
+
+                    <button type="submit" id="addtocart" class="btn-add">
+                        Add
                     </button>
 
                 </div>
@@ -58,7 +59,6 @@
             // lấy số lượng đặt hàng
             model.quantity = $("#ipQuantity").val();
             model.price = @Model.price;
-            debugger;
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("AddToCart", "GioHang")',
@@ -162,52 +162,58 @@
             }
 
         .product-price-btn {
-            height: 103px;
-            width: 327px;
-            margin-top: 30px;
-            position: relative;
+            margin-top: 10px;
+            margin-bottom: 60px;
         }
 
-            .product-price-btn p {
-                display: inline-block;
-                width: 300px;
-                top: -13px;
-                height: 50px;
-                font-family: 'Trocchi', serif;
-                margin: 0 0 0 150px;
-                font-size: 28px;
-                font-weight: lighter;
-                color: #474747;
+        .btn-add {
+            display: inline-block;
+            padding: 12px 28px;
+            margin: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            background-color: #2ba20a;
+            border: none;
+            border-radius: 40px;
+            box-shadow: 0px 4px 0px #53e113;
+            transition: all 0.2s ease-in-out;
+        }
+
+            .btn-add:hover {
+                transform: translateY(-2px);
+                box-shadow: 0px 6px 0px #55d714;
             }
 
-        span {
-            display: inline-block;
-            height: 50px;
-            font-family: 'Suranna', serif;
-            font-size: 34px;
-        }
+            .btn-add:active {
+                transform: translateY(0px);
+                box-shadow: none;
+                background-color: #2ba20a;
+            }
 
-        .product-price-btn button {
-            float: right;
-            display: inline-block;
-            height: 50px;
-            width: 176px;
-            box-sizing: border-box;
-            border: transparent;
-            border-radius: 60px;
-            font-family: 'Raleway', sans-serif;
-            font-size: 14px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: #ffffff;
-            background-color: #9cebd5;
-            cursor: pointer;
-            outline: none;
-        }
+            .btn-add:before,
+            .btn-add:after {
+                content: "";
+                position: absolute;
+                width: 0;
+                height: 0;
+            }
 
-            .product-price-btn button:hover {
-                background-color: #79b0a1;
+            .btn-add:before {
+                top: -3px;
+                left: -3px;
+                border-radius: 40px;
+                border-top: 3px solid #fff;
+                border-left: 3px solid #fff;
+            }
+
+            .btn-add:after {
+                bottom: -3px;
+                right: -3px;
+                border-radius: 40px;
+                border-bottom: 3px solid #fff;
+                border-right: 3px solid #fff;
             }
     </style>
 

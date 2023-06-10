@@ -29,7 +29,7 @@
             Chức vụ
         </th>
         <th></th>
-        
+
     </tr>
 
     <tr>
@@ -46,7 +46,7 @@
             @Html.DisplayFor(model => model.address)
         </td>
         <td>
-            @if(Model.role_id == 1)
+            @if (Model.role_id == 1)
             {
                 <p>ADMIN</p>
             }
@@ -55,7 +55,7 @@
                 <p>Nhân Viên</p>
             }
 
-            
+
         </td>
 
     </tr>
@@ -67,10 +67,10 @@
 
 
 
-<p class="changepass">
-    @Html.ActionLink("Đổi mật khẩu", "changePassword", new { id = Model.id })
-
-</p>
+<a href="@Url.Action("changePassword", new { id = Model.id })" class="change-password-link">
+    <span class="password-icon"></span>
+    Đổi mật khẩu
+</a>
 <style>
 
     .edit {
@@ -85,17 +85,55 @@
         cursor: pointer;
     }
 
-    .changepass {
-        background-color: #4CAF50;
-        display: inline-block;
-        padding: 10px 20px;
-        color: white;
+    .change-password-link {
+        background-color: #3cd31a;
+        border: none;
+        color: #ffffff;
+        padding: 15px 32px;
         text-align: center;
         text-decoration: none;
-        border: none;
-        border-radius: 4px;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
         cursor: pointer;
+        font-family: 'Montserrat', sans-serif;
+        letter-spacing: 2px;
+        border-radius: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        position: relative;
+        transition: all 0.3s ease;
     }
+
+        .changepass:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .changepass:hover:after {
+            width: 210px;
+            height: 200px;
+            opacity: 1;
+        }
+
+        .changepass:focus {
+            outline: none;
+        }
+
+        .changepass:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
+
 
     .column {
         float: right;

@@ -1,0 +1,17 @@
+ADMIN:
+admin1@gmail.com
+Aa@123456
+
+NhanVien
+admin2@gmail.com
+Aa@123
+
+admin3@gmail.com
+Aa@123
+
+admin4@gmail.com
+Aa@123
+
+User
+tranluudongtrieu@gmail.com
+Aa@123

@@ -308,11 +308,10 @@ button {
 }
 
 .read_more:hover {
-     background: #000000;
-     color: #fff;
-     transition: ease-in all 0.5s;
+    background: #c10e0e;
+    color: #fff;
+    transition: ease-in all 0.5s;
 }
-
 .text_align_left {
      text-align: left;
 }

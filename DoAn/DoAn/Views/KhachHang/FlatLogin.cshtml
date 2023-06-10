@@ -53,7 +53,7 @@
 
                     @Html.EditorFor(model => model.phone_number, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone Number", required = "" } })
                     @Html.ValidationMessageFor(model => model.phone_number, "", new { @class = "text-danger" })
-                    <button >Sign up</button>
+                    <button>Sign up</button>
                 </form>
             }
         </div>
@@ -64,38 +64,38 @@
             {
                 @Html.AntiForgeryToken()
 
-            <form>
+                <form>
 
-                <label for="chk" aria-hidden="true">Login</label>
-                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", placeholder = "email", required = "" } })
-                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                    <label for="chk" aria-hidden="true">Login</label>
+                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", placeholder = "email", required = "" } })
+                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
 
-                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", type = "password", placeholder = "password", required = "" } })
-                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-                <a href="@Url.Action("resetPass")"></a>
-                <div style="font-size:15px; margin-left:50px;color:red">@ViewData["CheckMK"]</div>
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", type = "password", placeholder = "password", required = "" } })
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                    <a href="@Url.Action("resetPass")"></a>
+                    <div style="font-size:15px; margin-left:50px;color:red">@ViewData["CheckMK"]</div>
 
 
-                <button>Login</button>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                       @Html.ActionLink("Forgot Password","forgotPass","KhachHang")
+                    <button>Login</button>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.ActionLink("Forgot Password", "forgotPass", "KhachHang")
 
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
             }
 
-            
+
 
             @using (Html.BeginForm("FacebookLogin", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    @Html.ActionLink("Login with Facebook", "FacebookLogin", null, new { @class = "btn btn-primary" })
+            {
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.ActionLink("Login with Facebook", "FacebookLogin", null, new { @class = "btn btn-primary" })
+                    </div>
                 </div>
-            </div>
-        }
+            }
         </div>
     </div>
 </body>
@@ -111,6 +111,7 @@
         font-size: 15px;
         margin-left: 50px;
     }
+
     body {
         margin: 0;
         padding: 0;
@@ -119,8 +120,10 @@
         align-items: center;
         min-height: 100vh;
         font-family: 'Jost', sans-serif;
-        background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+        background: url("https://thuthuatnhanh.com/wp-content/uploads/2020/03/hinh-nen-mau-xanh-la-cay-dam.jpg") no-repeat;
+        background-size: cover;
     }
+
 
     .main {
         width: 350px;
@@ -154,7 +157,7 @@
     }
 
     .btn-back:hover {
-        background-color: #ddd;
+        background-color: #0edf10;
         color: black;
     }
 
@@ -163,7 +166,7 @@
         width: 30px;
         text-decoration: none;
         display: inline-block;
-        background-color: #1c173c;
+        background-color: #23c009;
         color: white;
         border-radius: 2px;
     }
@@ -188,7 +191,7 @@
         justify-content: center;
         display: block;
         color: #fff;
-        background: #573b8a;
+        background: #23c009;
         font-size: 1em;
         font-weight: bold;
         margin-top: 20px;
@@ -200,7 +203,7 @@
     }
 
         button:hover {
-            background: #6d44b8;
+            background: #0edf10;
         }
 
     .login {
